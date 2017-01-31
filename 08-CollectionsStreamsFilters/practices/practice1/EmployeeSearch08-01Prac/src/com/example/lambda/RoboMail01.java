@@ -11,6 +11,7 @@ import java.util.function.Predicate;
  */
 public class RoboMail01 {
   
+    /*
   public void mail(
     List<Employee> pl, Predicate<Employee> pred){
     
@@ -20,6 +21,7 @@ public class RoboMail01 {
       }
     }
   }
+    */
   
   public void text(
     List<Employee> pl, Predicate<Employee> pred){
