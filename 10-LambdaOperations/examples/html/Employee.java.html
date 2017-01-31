@@ -1,0 +1,459 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Employee.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST3 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST4 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST5 {font-family: Monospaced; font-style: italic}
+.ST1 {font-family: Monospaced; font-weight: bold}
+.ST2 {color: #009900}
+.literal {color: #0000e6}
+.ST0 {color: #02ac1c; font-family: Monospaced; font-weight: bold}
+.ST6 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.comment {color: #02ac1c}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/06CollectionOperations/examples/EmployeeSearch/src/com/example/lambda/Employee.java</td></tr></table>
+<pre>
+  1 <span class="literal">package</span> com.example.lambda;
+  2 
+  3 <span class="literal">import</span> java.time.LocalDate;
+  4 <span class="literal">import</span> java.util.ArrayList;
+  5 <span class="literal">import</span> java.util.List;
+  6 <span class="literal">import</span> java.util.function.Consumer;
+  7 
+  8 <span class="comment">/**</span>
+  9 <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">MikeW</span>
+ 10  <span class="comment">*/</span>
+ 11 <span class="literal">public</span> <span class="literal">class</span> <span class="ST1">Employee</span> <span class="literal">implements</span> Comparable&lt;Employee&gt;{
+ 12   <span class="literal">private</span> String <span class="ST2">givenName</span>;
+ 13   <span class="literal">private</span> String <span class="ST2">surName</span>;
+ 14   <span class="literal">private</span> <span class="literal">int</span> <span class="ST2">age</span>;
+ 15   <span class="literal">private</span> Gender <span class="ST2">gender</span>;
+ 16   <span class="literal">private</span> Role <span class="ST2">role</span>;
+ 17   <span class="literal">private</span> String <span class="ST2">dept</span>;
+ 18   <span class="literal">private</span> LocalDate <span class="ST2">startDate</span>;
+ 19   <span class="literal">private</span> <span class="literal">double</span> <span class="ST2">salary</span>;
+ 20   <span class="literal">private</span> String <span class="ST2">eMail</span>;
+ 21   <span class="literal">private</span> String <span class="ST2">phone</span>;
+ 22   <span class="literal">private</span> String <span class="ST2">address</span>;
+ 23   <span class="literal">private</span> String <span class="ST2">city</span>;
+ 24   <span class="literal">private</span> String <span class="ST2">state</span>;
+ 25   <span class="literal">private</span> String <span class="ST2">code</span>;  
+ 26   
+ 27   <span class="literal">public</span> <span class="literal">static</span> <span class="literal">class</span> <span class="ST3">Builder</span>{
+ 28     
+ 29     <span class="literal">private</span> String <span class="ST2">givenName</span>=<span class="string">&quot;&quot;</span>;
+ 30     <span class="literal">private</span> String <span class="ST2">surName</span>=<span class="string">&quot;&quot;</span>;
+ 31     <span class="literal">private</span> <span class="literal">int</span> <span class="ST2">age</span> = 0;
+ 32     <span class="literal">private</span> Gender <span class="ST2">gender</span> = Gender.<span class="ST4">FEMALE</span>;
+ 33     <span class="literal">private</span> Role <span class="ST2">role</span> = Role.<span class="ST4">STAFF</span>;
+ 34     <span class="literal">private</span> String <span class="ST2">dept</span> = <span class="string">&quot;&quot;</span>;
+ 35     <span class="literal">private</span> LocalDate <span class="ST2">startDate</span> =  LocalDate.<span class="ST5">of</span>(1,1,1);
+ 36     <span class="literal">private</span> <span class="literal">double</span> <span class="ST2">salary</span> = 0;
+ 37     <span class="literal">private</span> String <span class="ST2">eMail</span> = <span class="string">&quot;&quot;</span>;
+ 38     <span class="literal">private</span> String <span class="ST2">phone</span> = <span class="string">&quot;&quot;</span>;
+ 39     <span class="literal">private</span> String <span class="ST2">address</span> = <span class="string">&quot;&quot;</span>;
+ 40     <span class="literal">private</span> String <span class="ST2">city</span> = <span class="string">&quot;&quot;</span>;
+ 41     <span class="literal">private</span> String <span class="ST2">state</span> = <span class="string">&quot;&quot;</span>;
+ 42     <span class="literal">private</span> String <span class="ST2">code</span> = <span class="string">&quot;&quot;</span>;
+ 43 
+ 44        
+ 45     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">givenName</span>(String givenName){
+ 46       <span class="literal">this</span>.<span class="ST2">givenName</span> = givenName;
+ 47       <span class="literal">return</span> <span class="literal">this</span>;
+ 48     }
+ 49     
+ 50     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">surName</span>(String surName){
+ 51       <span class="literal">this</span>.<span class="ST2">surName</span> = surName;
+ 52       <span class="literal">return</span> <span class="literal">this</span>;
+ 53     }
+ 54     
+ 55     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">age</span> (<span class="literal">int</span> val){
+ 56       <span class="ST2">age</span> = val;
+ 57       <span class="literal">return</span> <span class="literal">this</span>;
+ 58     }
+ 59     
+ 60     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">gender</span>(Gender val){
+ 61       <span class="ST2">gender</span> = val;
+ 62       <span class="literal">return</span> <span class="literal">this</span>;
+ 63     }
+ 64 
+ 65     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">role</span>(Role val){
+ 66       <span class="ST2">role</span> = val;
+ 67       <span class="literal">return</span> <span class="literal">this</span>;
+ 68     }
+ 69     
+ 70     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">dept</span>(String val){
+ 71       <span class="ST2">dept</span> = val;
+ 72       <span class="literal">return</span> <span class="literal">this</span>;
+ 73     }
+ 74     
+ 75     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">startDate</span>(LocalDate val){
+ 76         <span class="ST2">startDate</span> =  val;
+ 77         <span class="literal">return</span> <span class="literal">this</span>;
+ 78     }
+ 79     
+ 80     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">salary</span>(<span class="literal">double</span> val){
+ 81         <span class="ST2">salary</span> = val;
+ 82         <span class="literal">return</span> <span class="literal">this</span>;
+ 83     }
+ 84         
+ 85     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">email</span>(String val){
+ 86       <span class="ST2">eMail</span> = val;
+ 87       <span class="literal">return</span> <span class="literal">this</span>;
+ 88     }
+ 89     
+ 90     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">phoneNumber</span>(String val){
+ 91       <span class="ST2">phone</span> = val;
+ 92       <span class="literal">return</span> <span class="literal">this</span>;
+ 93     }
+ 94     
+ 95     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">address</span>(String val){
+ 96       <span class="ST2">address</span> = val;
+ 97       <span class="literal">return</span> <span class="literal">this</span>;
+ 98     }
+ 99 
+100     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">city</span>(String val){
+101       <span class="ST2">city</span> = val;
+102       <span class="literal">return</span> <span class="literal">this</span>;
+103     }
+104 
+105     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">state</span>(String val){
+106       <span class="ST2">state</span> = val;
+107       <span class="literal">return</span> <span class="literal">this</span>;
+108     }
+109 
+110     <span class="literal">public</span> Employee.<span class="ST5">Builder</span> <span class="ST1">code</span>(String val){
+111       <span class="ST2">code</span> = val;
+112       <span class="literal">return</span> <span class="literal">this</span>;
+113     }
+114     
+115     <span class="literal">public</span> Employee <span class="ST1">build</span>(){
+116       <span class="literal">return</span> <span class="literal">new</span> Employee(<span class="literal">this</span>);
+117     }
+118   }
+119     
+120   <span class="literal">private</span> <span class="ST1">Employee</span>(){
+121     <span class="literal">super</span>();
+122   }
+123     
+124   <span class="literal">private</span> <span class="ST1">Employee</span>(Employee.<span class="ST5">Builder</span> builder){
+125     <span class="ST2">givenName</span> = builder.<span class="ST2">givenName</span>;
+126     <span class="ST2">surName</span> = builder.<span class="ST2">surName</span>;
+127     <span class="ST2">age</span> = builder.<span class="ST2">age</span>;
+128     <span class="ST2">gender</span> = builder.<span class="ST2">gender</span>;
+129     <span class="ST2">role</span> = builder.<span class="ST2">role</span>;
+130     <span class="ST2">dept</span> = builder.<span class="ST2">dept</span>;
+131     <span class="ST2">startDate</span> = builder.<span class="ST2">startDate</span>;
+132     <span class="ST2">salary</span> = builder.<span class="ST2">salary</span>;
+133     <span class="ST2">eMail</span> = builder.<span class="ST2">eMail</span>;
+134     <span class="ST2">phone</span> = builder.<span class="ST2">phone</span>;
+135     <span class="ST2">address</span> = builder.<span class="ST2">address</span>;
+136     <span class="ST2">city</span> = builder.<span class="ST2">city</span>;
+137     <span class="ST2">state</span> = builder.<span class="ST2">state</span>;
+138     <span class="ST2">code</span> = builder.<span class="ST2">code</span>;
+139         
+140   }
+141   
+142   <span class="literal">public</span> <span class="literal">static</span> <span class="literal">int</span> <span class="ST3">sortBySalary</span>(Employee a, Employee b){
+143       Double s1 = <span class="literal">new</span> Double(a.getSalary());
+144       Double s2 = <span class="literal">new</span> Double(b.getSalary());
+145       <span class="literal">return</span> s1.compareTo(s2);   
+146   }
+147       
+148   <span class="literal">public</span> String <span class="ST1">getGivenName</span>(){
+149     <span class="literal">return</span> <span class="ST2">givenName</span>;
+150   }
+151   
+152   <span class="literal">public</span> String <span class="ST1">getSurName</span>(){
+153     <span class="literal">return</span> <span class="ST2">surName</span>;
+154   }
+155   
+156   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">setSurName</span>(String name){
+157       <span class="literal">this</span>.<span class="ST2">surName</span> = name;
+158   }
+159   
+160   <span class="literal">public</span> <span class="literal">int</span> <span class="ST1">getAge</span>(){
+161     <span class="literal">return</span> <span class="ST2">age</span>;
+162   }
+163   
+164   <span class="literal">public</span> Gender <span class="ST1">getGender</span>(){
+165     <span class="literal">return</span> <span class="ST2">gender</span>;
+166   }
+167 
+168   <span class="literal">public</span> Role <span class="ST1">getRole</span>(){
+169     <span class="literal">return</span> <span class="ST2">role</span>;
+170   }
+171 
+172   <span class="literal">public</span> String <span class="ST1">getDept</span>(){
+173     <span class="literal">return</span> <span class="ST2">dept</span>;
+174   }
+175   
+176   <span class="literal">public</span> LocalDate <span class="ST1">getStartDate</span>(){
+177       <span class="literal">return</span> <span class="ST2">startDate</span>;
+178   }
+179   
+180   <span class="literal">public</span> <span class="literal">double</span> <span class="ST1">getSalary</span>(){
+181       <span class="literal">return</span> <span class="ST2">salary</span>;
+182   }
+183     
+184   <span class="literal">public</span> String <span class="ST1">getEmail</span>(){
+185     <span class="literal">return</span> <span class="ST2">eMail</span>;
+186   }
+187   
+188   <span class="literal">public</span> String <span class="ST1">getPhone</span>(){
+189     <span class="literal">return</span> <span class="ST2">phone</span>;
+190   }
+191   
+192   <span class="literal">public</span> String <span class="ST1">getAddress</span>(){
+193     <span class="literal">return</span> <span class="ST2">address</span>;
+194   }
+195   
+196   <span class="literal">public</span> String <span class="ST1">getCity</span>(){
+197       <span class="literal">return</span> <span class="ST2">city</span>;
+198   }
+199   
+200   <span class="literal">public</span> String <span class="ST1">getState</span>(){
+201       <span class="literal">return</span> <span class="ST2">state</span>;
+202   }
+203   
+204   <span class="literal">public</span> String <span class="ST1">getCode</span>(){
+205       <span class="literal">return</span> <span class="ST2">code</span>;
+206   }
+207   
+208   @Override
+209   <span class="literal">public</span> <span class="literal">int</span> <span class="ST1">compareTo</span>(Employee e){
+210       <span class="literal">return</span> <span class="literal">this</span>.getSurName().compareTo(e.getSurName());
+211   }
+212   
+213  
+214   
+215   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">print</span>(){
+216     System.<span class="ST4">out</span>.println(
+217       <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">Name: </span><span class="string">&quot;</span> + <span class="ST2">givenName</span> + <span class="string">&quot;</span> <span class="string">&quot;</span> + <span class="ST2">surName</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> + 
+218       <span class="string">&quot;</span><span class="string">Age: </span><span class="string">&quot;</span> + <span class="ST2">age</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+219       <span class="string">&quot;</span><span class="string">Gender: </span><span class="string">&quot;</span> + <span class="ST2">gender</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> + 
+220       <span class="string">&quot;</span><span class="string">Role: </span><span class="string">&quot;</span> + <span class="ST2">role</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+221       <span class="string">&quot;</span><span class="string">Dept: </span><span class="string">&quot;</span> + <span class="ST2">dept</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+222       <span class="string">&quot;</span><span class="string">Start date: </span><span class="string">&quot;</span> + <span class="ST2">startDate</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> + 
+223       <span class="string">&quot;</span><span class="string">Salary: </span><span class="string">&quot;</span> + <span class="ST2">salary</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> + 
+224       <span class="string">&quot;</span><span class="string">eMail: </span><span class="string">&quot;</span> + <span class="ST2">eMail</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> + 
+225       <span class="string">&quot;</span><span class="string">Phone: </span><span class="string">&quot;</span> + <span class="ST2">phone</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+226       <span class="string">&quot;</span><span class="string">Address: </span><span class="string">&quot;</span> + <span class="ST2">address</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> + 
+227       <span class="string">&quot;</span><span class="string">City: </span><span class="string">&quot;</span> + <span class="ST2">city</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+228       <span class="string">&quot;</span><span class="string">State: </span><span class="string">&quot;</span> + <span class="ST2">state</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+229       <span class="string">&quot;</span><span class="string">Code: </span><span class="string">&quot;</span> + <span class="ST2">code</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span>
+230     );
+231   } 
+232 
+233   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">printSummary</span>(){
+234     System.<span class="ST4">out</span>.println(
+235       <span class="string">&quot;</span><span class="string">Name: </span><span class="string">&quot;</span> + <span class="ST2">givenName</span> + <span class="string">&quot;</span> <span class="string">&quot;</span> + <span class="ST2">surName</span> + 
+236       <span class="string">&quot;</span><span class="string"> Role: </span><span class="string">&quot;</span> + <span class="ST2">role</span> + 
+237       <span class="string">&quot;</span><span class="string"> Dept: </span><span class="string">&quot;</span> + <span class="ST2">dept</span> + 
+238       <span class="string">&quot;</span><span class="string"> eMail: </span><span class="string">&quot;</span> + <span class="ST2">eMail</span>
+239     );
+240   } 
+241 
+242   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">printLambda</span>(Consumer&lt;Employee&gt; cons){
+243     cons.accept(<span class="literal">this</span>);
+244   } 
+245   
+246   
+247   @Override
+248   <span class="literal">public</span> String <span class="ST1">toString</span>(){
+249     <span class="literal">return</span> 
+250       <span class="string">&quot;</span><span class="string">Name: </span><span class="string">&quot;</span> + <span class="ST2">givenName</span> + <span class="string">&quot;</span> <span class="string">&quot;</span> + <span class="ST2">surName</span> +  
+251       <span class="string">&quot;</span><span class="string"> Age: </span><span class="string">&quot;</span> + <span class="ST2">age</span> + 
+252       <span class="string">&quot;</span><span class="string"> Gender: </span><span class="string">&quot;</span> + <span class="ST2">gender</span> + 
+253       <span class="string">&quot;</span><span class="string"> Role: </span><span class="string">&quot;</span> + <span class="ST2">role</span> + 
+254       <span class="string">&quot;</span><span class="string"> Dept: </span><span class="string">&quot;</span> + <span class="ST2">dept</span> + 
+255       <span class="string">&quot;</span><span class="string"> Start date: </span><span class="string">&quot;</span> + <span class="ST2">startDate</span> + 
+256       <span class="string">&quot;</span><span class="string"> Salary: </span><span class="string">&quot;</span> + <span class="ST2">salary</span> +  
+257       <span class="string">&quot;</span><span class="string"> eMail: </span><span class="string">&quot;</span> + <span class="ST2">eMail</span> +
+258       <span class="string">&quot;</span><span class="string"> Phone: </span><span class="string">&quot;</span> + <span class="ST2">phone</span> +
+259       <span class="string">&quot;</span><span class="string"> Address: </span><span class="string">&quot;</span> + <span class="ST2">address</span> +
+260       <span class="string">&quot;</span><span class="string"> City: </span><span class="string">&quot;</span> + <span class="ST2">city</span> +
+261       <span class="string">&quot;</span><span class="string"> State: </span><span class="string">&quot;</span> + <span class="ST2">state</span> +
+262       <span class="string">&quot;</span><span class="string"> Code: </span><span class="string">&quot;</span> + <span class="ST2">code</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span>;
+263 
+264   } 
+265 
+266   <span class="literal">public</span> <span class="literal">static</span> List&lt;Employee&gt; <span class="ST3">createShortList</span>(){
+267     List&lt;Employee&gt; people = <span class="literal">new</span> ArrayList&lt;&gt;();
+268     
+269     people.add(
+270       <span class="literal">new</span> Employee.Builder()
+271             .givenName(<span class="string">&quot;</span><span class="string">Bob</span><span class="string">&quot;</span>)
+272             .surName(<span class="string">&quot;</span><span class="string">Baker</span><span class="string">&quot;</span>)
+273             .age(23)
+274             .gender(Gender.<span class="ST4">MALE</span>)
+275             .role(Role.<span class="ST4">STAFF</span>)
+276             .dept(<span class="string">&quot;</span><span class="string">Eng</span><span class="string">&quot;</span>)
+277             .startDate(LocalDate.<span class="ST5">of</span>(2013, 1, 10))
+278             .salary(40000)
+279             .email(<span class="string">&quot;</span><span class="string">bob.baker@example.com</span><span class="string">&quot;</span>)
+280             .phoneNumber(<span class="string">&quot;</span><span class="string">201-121-4678</span><span class="string">&quot;</span>)
+281             .address(<span class="string">&quot;</span><span class="string">44 4th St</span><span class="string">&quot;</span>)
+282             .city(<span class="string">&quot;</span><span class="string">Smallville</span><span class="string">&quot;</span>)
+283             .state(<span class="string">&quot;</span><span class="string">KS</span><span class="string">&quot;</span>)
+284             .code(<span class="string">&quot;</span><span class="string">12333</span><span class="string">&quot;</span>)
+285             .build() 
+286       );
+287     
+288     people.add(
+289       <span class="literal">new</span> Employee.Builder()
+290             .givenName(<span class="string">&quot;</span><span class="string">Jane</span><span class="string">&quot;</span>)
+291             .surName(<span class="string">&quot;</span><span class="string">Doe</span><span class="string">&quot;</span>)
+292             .age(25)
+293             .gender(Gender.<span class="ST4">FEMALE</span>)
+294             .role(Role.<span class="ST4">STAFF</span>)
+295             .dept(<span class="string">&quot;</span><span class="string">Sales</span><span class="string">&quot;</span>)
+296             .startDate(LocalDate.<span class="ST5">of</span>(2011, 7, 14))
+297             .salary(45000)
+298             .email(<span class="string">&quot;</span><span class="string">jane.doe@example.com</span><span class="string">&quot;</span>)
+299             .phoneNumber(<span class="string">&quot;</span><span class="string">202-123-4678</span><span class="string">&quot;</span>)
+300             .address(<span class="string">&quot;</span><span class="string">33 3rd St</span><span class="string">&quot;</span>)
+301             .city(<span class="string">&quot;</span><span class="string">Smallville</span><span class="string">&quot;</span>)
+302             .state(<span class="string">&quot;</span><span class="string">KS</span><span class="string">&quot;</span>)
+303             .code(<span class="string">&quot;</span><span class="string">12333</span><span class="string">&quot;</span>)
+304             .build() 
+305       );
+306     
+307     people.add(
+308       <span class="literal">new</span> Employee.Builder()
+309             .givenName(<span class="string">&quot;</span><span class="string">John</span><span class="string">&quot;</span>)
+310             .surName(<span class="string">&quot;</span><span class="string">Doe</span><span class="string">&quot;</span>)
+311             .age(28)
+312             .gender(Gender.<span class="ST4">MALE</span>)
+313             .role(Role.<span class="ST4">MANAGER</span>)
+314             .dept(<span class="string">&quot;</span><span class="string">Eng</span><span class="string">&quot;</span>)
+315             .startDate(LocalDate.<span class="ST5">of</span>(2007, 3, 1))
+316             .salary(65000)
+317             .email(<span class="string">&quot;</span><span class="string">john.doe@example.com</span><span class="string">&quot;</span>)
+318             .phoneNumber(<span class="string">&quot;</span><span class="string">202-123-4678</span><span class="string">&quot;</span>)
+319             .address(<span class="string">&quot;</span><span class="string">33 3rd St</span><span class="string">&quot;</span>)
+320             .city(<span class="string">&quot;</span><span class="string">Smallville</span><span class="string">&quot;</span>)
+321             .state(<span class="string">&quot;</span><span class="string">KS</span><span class="string">&quot;</span>)
+322             .code(<span class="string">&quot;</span><span class="string">12333</span><span class="string">&quot;</span>)
+323             .build()
+324     );
+325     
+326     people.add(
+327       <span class="literal">new</span> Employee.Builder()
+328             .givenName(<span class="string">&quot;</span><span class="string">James</span><span class="string">&quot;</span>)
+329             .surName(<span class="string">&quot;</span><span class="string">Johnson</span><span class="string">&quot;</span>)
+330             .age(45)
+331             .gender(Gender.<span class="ST4">MALE</span>)
+332             .role(Role.<span class="ST4">MANAGER</span>)
+333             .dept(<span class="string">&quot;</span><span class="string">Eng</span><span class="string">&quot;</span>)
+334             .startDate(LocalDate.<span class="ST5">of</span>(1999, 5, 1))
+335             .salary(85000)
+336             .email(<span class="string">&quot;</span><span class="string">james.johnson@example.com</span><span class="string">&quot;</span>)
+337             .phoneNumber(<span class="string">&quot;</span><span class="string">333-456-1233</span><span class="string">&quot;</span>)
+338             .address(<span class="string">&quot;</span><span class="string">201 2nd St</span><span class="string">&quot;</span>)
+339             .city(<span class="string">&quot;</span><span class="string">BrainTree</span><span class="string">&quot;</span>)
+340             .state(<span class="string">&quot;</span><span class="string">MA</span><span class="string">&quot;</span>)
+341             .code(<span class="string">&quot;</span><span class="string">11111</span><span class="string">&quot;</span>)
+342             .build()
+343     );
+344 
+345     people.add(
+346       <span class="literal">new</span> Employee.Builder()
+347             .givenName(<span class="string">&quot;</span><span class="string">John</span><span class="string">&quot;</span>)
+348             .surName(<span class="string">&quot;</span><span class="string">Adams</span><span class="string">&quot;</span>)
+349             .age(52)
+350             .gender(Gender.<span class="ST4">MALE</span>)
+351             .role(Role.<span class="ST4">MANAGER</span>)
+352             .dept(<span class="string">&quot;</span><span class="string">Sales</span><span class="string">&quot;</span>)
+353             .startDate(LocalDate.<span class="ST5">of</span>(1994, 2, 1))
+354             .salary(90000)
+355             .email(<span class="string">&quot;</span><span class="string">john.adams@example.com</span><span class="string">&quot;</span>)
+356             .phoneNumber(<span class="string">&quot;</span><span class="string">112-111-1111</span><span class="string">&quot;</span>)
+357             .address(<span class="string">&quot;</span><span class="string">111 1st St</span><span class="string">&quot;</span>)
+358             .city(<span class="string">&quot;</span><span class="string">Braintree</span><span class="string">&quot;</span>)
+359             .state(<span class="string">&quot;</span><span class="string">MA</span><span class="string">&quot;</span>)
+360             .code(<span class="string">&quot;</span><span class="string">11111</span><span class="string">&quot;</span>)
+361             .build()
+362     );
+363     
+364     people.add(
+365       <span class="literal">new</span> Employee.Builder()
+366             .givenName(<span class="string">&quot;</span><span class="string">Joe</span><span class="string">&quot;</span>)
+367             .surName(<span class="string">&quot;</span><span class="string">Bailey</span><span class="string">&quot;</span>)
+368             .age(62)
+369             .gender(Gender.<span class="ST4">MALE</span>)
+370             .role(Role.<span class="ST4">EXECUTIVE</span>)
+371             .dept(<span class="string">&quot;</span><span class="string">Eng</span><span class="string">&quot;</span>)
+372             .startDate(LocalDate.<span class="ST5">of</span>(1992, 1, 5))
+373             .salary(120000)
+374             .email(<span class="string">&quot;</span><span class="string">joebob.bailey@example.com</span><span class="string">&quot;</span>)
+375             .phoneNumber(<span class="string">&quot;</span><span class="string">112-111-1111</span><span class="string">&quot;</span>)
+376             .address(<span class="string">&quot;</span><span class="string">111 1st St</span><span class="string">&quot;</span>)
+377             .city(<span class="string">&quot;</span><span class="string">Town</span><span class="string">&quot;</span>)
+378             .state(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>)
+379             .code(<span class="string">&quot;</span><span class="string">11111</span><span class="string">&quot;</span>)
+380             .build()
+381     );
+382     
+383     people.add(
+384       <span class="literal">new</span> Employee.Builder()
+385             .givenName(<span class="string">&quot;</span><span class="string">Phil</span><span class="string">&quot;</span>)
+386             .surName(<span class="string">&quot;</span><span class="string">Smith</span><span class="string">&quot;</span>)
+387             .age(55)
+388             .gender(Gender.<span class="ST4">MALE</span>)
+389             .role(Role.<span class="ST4">EXECUTIVE</span>)
+390             .dept(<span class="string">&quot;</span><span class="string">HR</span><span class="string">&quot;</span>)
+391             .startDate(LocalDate.<span class="ST5">of</span>(2000, 10, 10))
+392             .salary(110000)
+393             .email(<span class="string">&quot;</span><span class="string">phil.smith@examp;e.com</span><span class="string">&quot;</span>)
+394             .phoneNumber(<span class="string">&quot;</span><span class="string">222-33-1234</span><span class="string">&quot;</span>)
+395             .address(<span class="string">&quot;</span><span class="string">22 2nd St</span><span class="string">&quot;</span>)
+396             .city(<span class="string">&quot;</span><span class="string">New Park</span><span class="string">&quot;</span>)
+397             .state(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>)
+398             .code(<span class="string">&quot;</span><span class="string">222333</span><span class="string">&quot;</span>)
+399             .build()
+400     );
+401     
+402     people.add(
+403       <span class="literal">new</span> Employee.Builder()
+404             .givenName(<span class="string">&quot;</span><span class="string">Betty</span><span class="string">&quot;</span>)
+405             .surName(<span class="string">&quot;</span><span class="string">Jones</span><span class="string">&quot;</span>)
+406             .age(65)
+407             .gender(Gender.<span class="ST4">FEMALE</span>)
+408             .role(Role.<span class="ST4">EXECUTIVE</span>)
+409             .dept(<span class="string">&quot;</span><span class="string">Sales</span><span class="string">&quot;</span>)
+410             .startDate(LocalDate.<span class="ST5">of</span>(1984, 7, 10))
+411             .salary(140000)
+412             .email(<span class="string">&quot;</span><span class="string">betty.jones@example.com</span><span class="string">&quot;</span>)
+413             .phoneNumber(<span class="string">&quot;</span><span class="string">211-33-1234</span><span class="string">&quot;</span>)
+414             .address(<span class="string">&quot;</span><span class="string">22 4th St</span><span class="string">&quot;</span>)
+415             .city(<span class="string">&quot;</span><span class="string">New Park</span><span class="string">&quot;</span>)
+416             .state(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>)
+417             .code(<span class="string">&quot;</span><span class="string">222333</span><span class="string">&quot;</span>)
+418             .build()
+419     );
+420     
+421     
+422     <span class="literal">return</span> people;
+423   }
+424   
+425 }
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

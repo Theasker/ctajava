@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>VacationTest.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST1 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST2 {font-family: Monospaced; font-style: italic}
+.ST3 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST0 {font-family: Monospaced; font-weight: bold}
+.literal {color: #0000e6}
+.ST4 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.comment {color: #02ac1c}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/06CollectionOperations/examples/EmployeeSearch/src/com/example/lambda/VacationTest.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example.lambda;
+ 2 
+ 3 <span class="literal">import</span> java.time.LocalDate;
+ 4 <span class="literal">import</span> <span class="literal">static</span> java.time.temporal.ChronoUnit.DAYS;
+ 5 <span class="literal">import</span> java.util.List;
+ 6 
+ 7 <span class="literal">public</span> <span class="literal">class</span> <span class="ST0">VacationTest</span> {
+ 8     
+ 9     <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> <span class="ST1">main</span>(String[] args) {
+10         
+11         List&lt;Employee&gt; eList = Employee.<span class="ST2">createShortList</span>();
+12         
+13         <span class="comment">// Calc accrued days</span>
+14         LocalDate yearStart = LocalDate.<span class="ST2">of</span>(2014,1,1);
+15         <span class="literal">long</span> dayCount = yearStart.until(LocalDate.<span class="ST2">now</span>(), <span class="ST3">DAYS</span>);
+16                         
+17         <span class="comment">// Print Starting values</span>
+18         System.<span class="ST3">out</span>.println(<span class="string">&quot;</span><span class="ST4">\n</span><span class="string">Days: </span><span class="string">&quot;</span> + dayCount);
+19         System.<span class="ST3">out</span>.printf(<span class="string">&quot;</span><span class="string">Vacation Accrual Exec, Manager, Staff: %2.4f, %2.4f, %2.4f%n</span><span class="string">&quot;</span>, 
+20             VacAccrual.<span class="ST3">EXECUTIVE</span>.perDay(), VacAccrual.<span class="ST3">MANAGER</span>.perDay(), VacAccrual.<span class="ST3">STAFF</span>.perDay());
+21             
+22         
+23         <span class="comment">// Print Vacation Summary Managers</span>
+24         System.<span class="ST3">out</span>.println(<span class="string">&quot;</span><span class="ST4">\n</span><span class="string">== Vacation Summary List ==</span><span class="string">&quot;</span>);
+25         eList.stream()
+26             .filter(e -&gt; e.getRole().equals(Role.<span class="ST3">MANAGER</span>))
+27             .forEach(
+28                 e -&gt; System.<span class="ST3">out</span>.printf(
+29                     <span class="string">&quot;</span><span class="string"> Name: </span><span class="string">&quot;</span> + e.getGivenName() + <span class="string">&quot;</span> <span class="string">&quot;</span> +
+30                     e.getSurName() + <span class="string">&quot;</span><span class="string"> Role: </span><span class="string">&quot;</span> + e.getRole() + <span class="string">&quot;</span><span class="string"> Dept: </span><span class="string">&quot;</span> + 
+31                     e.getDept() + <span class="string">&quot;</span><span class="string"> ST: </span><span class="string">&quot;</span> + e.getState() +
+32                     <span class="string">&quot;</span><span class="string"> Vacation: %,6.4f %n</span><span class="string">&quot;</span>, VacAccrual.<span class="ST2">byRole</span>(e.getRole()) * dayCount
+33                 )
+34             );
+35 
+36         <span class="comment">// Print Vacation Summary Staff</span>
+37         System.<span class="ST3">out</span>.println(<span class="string">&quot;</span><span class="ST4">\n</span><span class="string">== Vacation Summary List ==</span><span class="string">&quot;</span>);
+38         eList.stream()
+39             .filter(e -&gt; e.getRole().equals(Role.<span class="ST3">STAFF</span>))
+40             .forEach(
+41                 e -&gt; System.<span class="ST3">out</span>.printf(
+42                     <span class="string">&quot;</span><span class="string"> Name: </span><span class="string">&quot;</span> + e.getGivenName() + <span class="string">&quot;</span> <span class="string">&quot;</span> +
+43                     e.getSurName() + <span class="string">&quot;</span><span class="string"> Role: </span><span class="string">&quot;</span> + e.getRole() + <span class="string">&quot;</span><span class="string"> Dept: </span><span class="string">&quot;</span> + 
+44                     e.getDept() + <span class="string">&quot;</span><span class="string"> ST: </span><span class="string">&quot;</span> + e.getState() +
+45                     <span class="string">&quot;</span><span class="string"> Vacation: %,6.4f %n</span><span class="string">&quot;</span>, VacAccrual.<span class="ST2">byRole</span>(e.getRole()) * dayCount
+46                 )
+47             );        
+48         
+49         <span class="comment">// Print Vacation Summary Staff</span>
+50         System.<span class="ST3">out</span>.println(<span class="string">&quot;</span><span class="ST4">\n</span><span class="string">== Exec Bonus Summary List ==</span><span class="string">&quot;</span>);
+51         eList.stream()
+52             .filter(e -&gt; e.getRole().equals(Role.<span class="ST3">EXECUTIVE</span>))
+53             .forEach(
+54                 e -&gt; System.<span class="ST3">out</span>.printf(
+55                     <span class="string">&quot;</span><span class="string">Name: </span><span class="string">&quot;</span> + e.getGivenName() + <span class="string">&quot;</span> <span class="string">&quot;</span> +
+56                     e.getSurName() + <span class="string">&quot;</span><span class="string"> Role: </span><span class="string">&quot;</span> + e.getRole() + <span class="string">&quot;</span><span class="string"> Dept: </span><span class="string">&quot;</span> + 
+57                     e.getDept() + <span class="string">&quot;</span><span class="string"> ST: </span><span class="string">&quot;</span> + e.getState() +
+58                     <span class="string">&quot;</span><span class="string"> Bonus: %,6.2f %n</span><span class="string">&quot;</span>, Bonus.<span class="ST2">byRole</span>(e.getRole()) * e.getSalary())
+59             );        
+60 
+61     }
+62 }
+63 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

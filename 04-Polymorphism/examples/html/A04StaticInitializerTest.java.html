@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>A04StaticInitializerTest.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST2 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST1 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST0 {font-family: Monospaced; font-weight: bold}
+.literal {color: #0000e6}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/04-Polymorphism/examples/StaticExamples/src/example/com/A04StaticInitializerTest.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> example.com;
+ 2 
+ 3 <span class="literal">public</span> <span class="literal">class</span> <span class="ST0">A04StaticInitializerTest</span> {
+ 4   <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> <span class="literal">boolean</span>[] <span class="ST1">switches</span> = <span class="literal">new</span> <span class="literal">boolean</span>[5];
+ 5   
+ 6   <span class="literal">static</span>{
+ 7     System.<span class="ST1">out</span>.println(<span class="string">&quot;</span><span class="string">Initializing...</span><span class="string">&quot;</span>);
+ 8     <span class="literal">for</span> (<span class="literal">int</span> i=0; i&lt;5; i++){
+ 9       <span class="ST1">switches</span>[i] = <span class="literal">true</span>;
+10     }
+11   }
+12   
+13   <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> <span class="ST2">main</span>(String[] args) {
+14     <span class="ST1">switches</span>[1] = <span class="literal">false</span>; <span class="ST1">switches</span>[2] = <span class="literal">false</span>;
+15     System.<span class="ST1">out</span>.print(<span class="string">&quot;</span><span class="string">Switch settings: </span><span class="string">&quot;</span>);
+16     <span class="literal">for</span> (<span class="literal">boolean</span> curSwitch:<span class="ST1">switches</span>){
+17       <span class="literal">if</span> (curSwitch){System.<span class="ST1">out</span>.print(<span class="string">&quot;</span><span class="string">1</span><span class="string">&quot;</span>);}
+18       <span class="literal">else</span> {System.<span class="ST1">out</span>.print(<span class="string">&quot;</span><span class="string">0</span><span class="string">&quot;</span>);}
+19     }
+20     System.<span class="ST1">out</span>.println();
+21   } 
+22 }
+23 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

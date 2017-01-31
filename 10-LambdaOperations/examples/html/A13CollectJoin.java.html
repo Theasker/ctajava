@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>A13CollectJoin.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST2 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST3 {font-family: Monospaced; font-style: italic}
+.ST4 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST1 {font-family: Monospaced; font-weight: bold}
+.literal {color: #0000e6}
+.ST0 {color: #02ac1c; font-family: Monospaced; font-weight: bold}
+.ST5 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.comment {color: #02ac1c}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/06CollectionOperations/examples/EmployeeSearch/src/com/example/lambda/A13CollectJoin.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example.lambda;
+ 2 
+ 3 <span class="literal">import</span> java.util.ArrayList;
+ 4 <span class="literal">import</span> java.util.Comparator;
+ 5 <span class="literal">import</span> java.util.List;
+ 6 <span class="literal">import</span> java.util.stream.Collectors;
+ 7 
+ 8 <span class="comment">/**</span>
+ 9 <span class="comment"> *</span>
+10 <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">oracle</span>
+11  <span class="comment">*/</span>
+12 <span class="literal">public</span> <span class="literal">class</span> <span class="ST1">A13CollectJoin</span> {
+13     
+14     <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> <span class="ST2">main</span>(String[] args) {
+15         
+16         List&lt;Employee&gt; eList = Employee.<span class="ST3">createShortList</span>();
+17        
+18         <span class="comment">// Collect CO Executives</span>
+19         String deptList = eList.stream()
+20             .map(Employee::getDept)
+21             .distinct()
+22             .collect(Collectors.<span class="ST3">joining</span>(<span class="string">&quot;</span><span class="string">, </span><span class="string">&quot;</span>));        
+23 
+24         System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="ST5">\n</span><span class="string">== Dept List ==</span><span class="string">&quot;</span>);
+25         System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="string">Total: </span><span class="string">&quot;</span> + deptList);        
+26                 
+27     }
+28     
+29 }
+30 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

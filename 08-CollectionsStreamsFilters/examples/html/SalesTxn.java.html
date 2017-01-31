@@ -1,0 +1,568 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>SalesTxn.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST6 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.string {color: #ce7b00}
+.ST0 {color: #479953; font-family: Monospaced; font-weight: bold}
+.comment {color: #479953}
+.literal {color: #0000e6}
+.ST1 {font-family: Monospaced; font-weight: bold}
+.ST2 {color: #009900}
+.ST4 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST3 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST5 {font-family: Monospaced; font-style: italic}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/05LambdaIteration/examples/SalesTxn/src/com/example/lambda/SalesTxn.java</td></tr></table>
+<pre>
+  1 <span class="literal">package</span> com.example.lambda;
+  2 
+  3 <span class="literal">import</span> java.time.LocalDate;
+  4 <span class="literal">import</span> java.util.ArrayList;
+  5 <span class="literal">import</span> java.util.List;
+  6 <span class="literal">import</span> java.util.function.Consumer;
+  7 <span class="literal">import</span> java.util.function.Supplier;
+  8 
+  9 <span class="comment">/**</span>
+ 10 <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">MikeW</span>
+ 11  <span class="comment">*/</span>
+ 12 <span class="literal">public</span> <span class="literal">class</span> <span class="ST1">SalesTxn</span> {
+ 13     <span class="literal">private</span> <span class="literal">long</span> <span class="ST2">txnId</span>;
+ 14     <span class="literal">private</span> String <span class="ST2">salesPerson</span>;
+ 15     <span class="literal">private</span> String <span class="ST2">buyerName</span>;
+ 16     <span class="literal">private</span> String <span class="ST2">buyerClass</span>;
+ 17     <span class="literal">private</span> String <span class="ST2">product</span>;
+ 18     <span class="literal">private</span> String <span class="ST2">paymentType</span>;
+ 19     <span class="literal">private</span> <span class="literal">double</span> <span class="ST2">unitPrice</span>;
+ 20     <span class="literal">private</span> <span class="literal">double</span> <span class="ST2">unitCount</span>;
+ 21     <span class="literal">private</span> <span class="literal">double</span> <span class="ST2">taxRate</span>;
+ 22     <span class="literal">private</span> <span class="literal">double</span> <span class="ST2">discountRate</span>;
+ 23     <span class="literal">private</span> LocalDate <span class="ST2">txnDate</span>;
+ 24     <span class="literal">private</span> String <span class="ST2">city</span>;
+ 25     <span class="literal">private</span> String <span class="ST2">state</span>;
+ 26     <span class="literal">private</span> String <span class="ST2">code</span>;
+ 27   
+ 28     <span class="literal">public</span> <span class="literal">static</span> <span class="literal">final</span> Consumer&lt;SalesTxn&gt; <span class="ST3">printStateSummary</span> = t -&gt; 
+ 29         System.<span class="ST3">out</span>.println(<span class="string">&quot;</span><span class="string">Id: </span><span class="string">&quot;</span> + t.getTxnId() + <span class="string">&quot;</span><span class="string"> Seller: </span><span class="string">&quot;</span> + t.getSalesPerson()
+ 30         + <span class="string">&quot;</span><span class="string"> Buyer: </span><span class="string">&quot;</span> + t.getBuyerName() + <span class="string">&quot;</span><span class="string"> State: </span><span class="string">&quot;</span> + t.getState() + 
+ 31         <span class="string">&quot;</span><span class="string"> Amt: </span><span class="string">&quot;</span> + t.getTransactionTotal());
+ 32   
+ 33     <span class="literal">public</span> <span class="literal">static</span> <span class="literal">class</span> <span class="ST4">Builder</span>{
+ 34     
+ 35         <span class="literal">private</span> <span class="literal">long</span> <span class="ST2">txnId</span> = 0;
+ 36         <span class="literal">private</span> String <span class="ST2">salesPerson</span> = <span class="string">&quot;&quot;</span>;
+ 37         <span class="literal">private</span> String <span class="ST2">buyerName</span> = <span class="string">&quot;&quot;</span>;
+ 38         <span class="literal">private</span> String <span class="ST2">buyerClass</span> = <span class="string">&quot;&quot;</span>;
+ 39         <span class="literal">private</span> String <span class="ST2">product</span> = <span class="string">&quot;&quot;</span>;
+ 40         <span class="literal">private</span> String <span class="ST2">paymentType</span> = <span class="string">&quot;&quot;</span>;
+ 41         <span class="literal">private</span> <span class="literal">double</span> <span class="ST2">unitPrice</span> = 0;
+ 42         <span class="literal">private</span> <span class="literal">double</span> <span class="ST2">unitCount</span> = 0;
+ 43         <span class="literal">private</span> <span class="literal">double</span> <span class="ST2">taxRate</span> = 0;
+ 44         <span class="literal">private</span> <span class="literal">double</span> <span class="ST2">discountRate</span> = 0;
+ 45         <span class="literal">private</span> LocalDate <span class="ST2">txnDate</span> = LocalDate.<span class="ST5">of</span>(1, 1, 1);
+ 46         <span class="literal">private</span> String <span class="ST2">city</span> = <span class="string">&quot;&quot;</span>;
+ 47         <span class="literal">private</span> String <span class="ST2">state</span> = <span class="string">&quot;&quot;</span>;
+ 48         <span class="literal">private</span> String <span class="ST2">code</span> = <span class="string">&quot;&quot;</span>;
+ 49        
+ 50         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">txnId</span>(<span class="literal">long</span> val){
+ 51             <span class="literal">this</span>.<span class="ST2">txnId</span> = val;
+ 52             <span class="literal">return</span> <span class="literal">this</span>;
+ 53         }
+ 54         
+ 55         
+ 56         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">salesPerson</span>( String val){
+ 57             <span class="literal">this</span>.<span class="ST2">salesPerson</span> = val;
+ 58             <span class="literal">return</span> <span class="literal">this</span>;
+ 59         }
+ 60         
+ 61         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">buyerName</span>(String val){
+ 62             <span class="literal">this</span>.<span class="ST2">buyerName</span> = val;
+ 63             <span class="literal">return</span> <span class="literal">this</span>;
+ 64         }
+ 65         
+ 66         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">buyerClass</span>(String val){
+ 67             <span class="literal">this</span>.<span class="ST2">buyerClass</span> = val;
+ 68             <span class="literal">return</span> <span class="literal">this</span>;
+ 69         }
+ 70         
+ 71         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">product</span>(String val){
+ 72             <span class="literal">this</span>.<span class="ST2">product</span> = val;
+ 73             <span class="literal">return</span> <span class="literal">this</span>;
+ 74         }
+ 75 
+ 76         
+ 77         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">paymentType</span>( String val){
+ 78             <span class="literal">this</span>.<span class="ST2">paymentType</span> = val;
+ 79             <span class="literal">return</span> <span class="literal">this</span>;
+ 80         }
+ 81 
+ 82         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">unitPrice</span>(<span class="literal">double</span> val){
+ 83             <span class="literal">this</span>.<span class="ST2">unitPrice</span> = val;
+ 84             <span class="literal">return</span> <span class="literal">this</span>;
+ 85         }
+ 86 
+ 87         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">unitCount</span>(<span class="literal">double</span> val){
+ 88             <span class="literal">this</span>.<span class="ST2">unitCount</span> = val;
+ 89             <span class="literal">return</span> <span class="literal">this</span>;
+ 90         }
+ 91         
+ 92         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">taxRate</span>(<span class="literal">double</span> val){
+ 93             <span class="literal">this</span>.<span class="ST2">taxRate</span> = val;
+ 94             <span class="literal">return</span> <span class="literal">this</span>;
+ 95         }
+ 96 
+ 97         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">discountRate</span>(<span class="literal">double</span> val){
+ 98             <span class="literal">this</span>.<span class="ST2">discountRate</span> = val;
+ 99             <span class="literal">return</span> <span class="literal">this</span>;
+100         }
+101 
+102         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">txnDate</span>(LocalDate val){
+103             <span class="literal">this</span>.<span class="ST2">txnDate</span> = val;
+104             <span class="literal">return</span> <span class="literal">this</span>;
+105         }    
+106 
+107         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">city</span>(String val){
+108           <span class="ST2">city</span> = val;
+109           <span class="literal">return</span> <span class="literal">this</span>;
+110         }
+111 
+112         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">state</span>(String val){
+113           <span class="ST2">state</span> = val;
+114           <span class="literal">return</span> <span class="literal">this</span>;
+115         }
+116 
+117         <span class="literal">public</span> SalesTxn.<span class="ST5">Builder</span> <span class="ST1">code</span>(String val){
+118           <span class="ST2">code</span> = val;
+119           <span class="literal">return</span> <span class="literal">this</span>;
+120         }
+121 
+122         <span class="literal">public</span> SalesTxn <span class="ST1">build</span>(){
+123           <span class="literal">return</span> <span class="literal">new</span> SalesTxn(<span class="literal">this</span>);
+124         }
+125   }
+126     
+127     <span class="literal">private</span> <span class="ST1">SalesTxn</span>(){
+128         <span class="literal">super</span>();
+129     }
+130     
+131   <span class="literal">private</span> <span class="ST1">SalesTxn</span>(SalesTxn.<span class="ST5">Builder</span> builder){
+132     <span class="ST2">txnId</span> = builder.<span class="ST2">txnId</span>;
+133     <span class="ST2">salesPerson</span> = builder.<span class="ST2">salesPerson</span>;
+134     <span class="ST2">buyerName</span> = builder.<span class="ST2">buyerName</span>;
+135     <span class="ST2">buyerClass</span> = builder.<span class="ST2">buyerClass</span>;
+136     <span class="ST2">product</span> = builder.<span class="ST2">product</span>;
+137     <span class="ST2">paymentType</span> = builder.<span class="ST2">paymentType</span>;
+138     <span class="ST2">unitPrice</span> = builder.<span class="ST2">unitPrice</span>;
+139     <span class="ST2">unitCount</span> = builder.<span class="ST2">unitCount</span>;
+140     <span class="ST2">taxRate</span> = builder.<span class="ST2">taxRate</span>;
+141     <span class="ST2">discountRate</span> = builder.<span class="ST2">discountRate</span>;
+142     <span class="ST2">txnDate</span> = builder.<span class="ST2">txnDate</span>;
+143     <span class="ST2">city</span> = builder.<span class="ST2">city</span>;
+144     <span class="ST2">state</span> = builder.<span class="ST2">state</span>;
+145     <span class="ST2">code</span> = builder.<span class="ST2">code</span>;
+146     
+147   }
+148   
+149   <span class="comment">// Consumer Example</span>
+150   <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> <span class="ST4">consumeTxnList</span>(List&lt;SalesTxn&gt; tList, Consumer&lt;SalesTxn&gt; cons){
+151       
+152       <span class="literal">for</span>(SalesTxn txn:tList){
+153           cons.accept(txn);
+154       }
+155   }
+156   
+157   
+158   <span class="comment">// Supplier Example</span>
+159   <span class="literal">public</span> <span class="literal">static</span> SalesTxn <span class="ST4">createTransaction</span>(Supplier&lt;SalesTxn&gt; sup){
+160       <span class="literal">return</span> sup.get();
+161   }  
+162   
+163   <span class="literal">public</span> <span class="literal">long</span> <span class="ST1">getTxnId</span>(){
+164     <span class="literal">return</span> <span class="ST2">txnId</span>;
+165   }
+166   
+167   <span class="literal">public</span> String <span class="ST1">getSalesPerson</span>(){
+168     <span class="literal">return</span> <span class="ST2">salesPerson</span>;
+169   }
+170   
+171   <span class="literal">public</span> String <span class="ST1">getBuyerName</span>(){
+172     <span class="literal">return</span> <span class="ST2">buyerName</span>;
+173   }
+174   
+175   <span class="literal">public</span> String <span class="ST1">buyerClass</span>(){
+176     <span class="literal">return</span> <span class="ST2">buyerClass</span>;
+177   }
+178   
+179   <span class="literal">public</span> String <span class="ST1">getProduct</span>(){
+180     <span class="literal">return</span> <span class="ST2">product</span>;
+181   }
+182   
+183   <span class="literal">public</span> String <span class="ST1">getPaymentType</span>(){
+184     <span class="literal">return</span> <span class="ST2">paymentType</span>;
+185   }
+186   
+187   <span class="literal">public</span> <span class="literal">double</span> <span class="ST1">getUnitPrice</span>(){
+188     <span class="literal">return</span> <span class="ST2">unitPrice</span>;
+189   }
+190   
+191   <span class="literal">public</span> <span class="literal">double</span> <span class="ST1">getUnitCount</span>(){
+192       <span class="literal">return</span> <span class="ST2">unitCount</span>;
+193   }
+194   
+195   <span class="literal">public</span> <span class="literal">double</span> <span class="ST1">getTaxRate</span>(){
+196       <span class="literal">return</span> <span class="ST2">taxRate</span>;
+197   }
+198   
+199   <span class="literal">public</span> <span class="literal">double</span> <span class="ST1">getDiscountRate</span>(){
+200       <span class="literal">return</span> <span class="ST2">discountRate</span>;
+201   }
+202   
+203   <span class="literal">public</span> LocalDate <span class="ST1">getTxnDate</span>(){
+204       <span class="literal">return</span> <span class="ST2">txnDate</span>;
+205   }
+206     
+207   <span class="literal">public</span> String <span class="ST1">getCity</span>(){
+208       <span class="literal">return</span> <span class="ST2">city</span>;
+209   }
+210   
+211   <span class="literal">public</span> String <span class="ST1">getState</span>(){
+212       <span class="literal">return</span> <span class="ST2">state</span>;
+213   }
+214   
+215   <span class="literal">public</span> String <span class="ST1">getCode</span>(){
+216       <span class="literal">return</span> <span class="ST2">code</span>;
+217   }
+218  
+219   <span class="literal">public</span> <span class="literal">double</span> <span class="ST1">getTransactionTotal</span>(){
+220       <span class="literal">return</span> <span class="literal">this</span>.<span class="ST2">unitCount</span> * <span class="literal">this</span>.<span class="ST2">unitPrice</span>;
+221   }
+222  
+223   <span class="literal">public</span> <span class="literal">static</span> <span class="literal">int</span> <span class="ST4">sortByBuyer</span>(SalesTxn a, SalesTxn b){
+224       <span class="literal">return</span> a.getBuyerName().compareTo(b.getBuyerName());
+225   }
+226   
+227   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">print</span>(){
+228     System.<span class="ST3">out</span>.println(
+229         <span class="string">&quot;</span><span class="string">Transaction id: </span><span class="string">&quot;</span> + <span class="ST2">txnId</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+230         <span class="string">&quot;</span><span class="string">Sales person: </span><span class="string">&quot;</span> + <span class="ST2">salesPerson</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+231         <span class="string">&quot;</span><span class="string">Buyer name: </span><span class="string">&quot;</span> + <span class="ST2">buyerName</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+232         <span class="string">&quot;</span><span class="string">Buyer class: </span><span class="string">&quot;</span> + <span class="ST2">buyerClass</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+233         <span class="string">&quot;</span><span class="string">Product: </span><span class="string">&quot;</span> + <span class="ST2">product</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> + 
+234         <span class="string">&quot;</span><span class="string">Payment type: </span><span class="string">&quot;</span> + <span class="ST2">paymentType</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+235         <span class="string">&quot;</span><span class="string">Unit price: $</span><span class="string">&quot;</span> + <span class="ST2">unitPrice</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+236         <span class="string">&quot;</span><span class="string">Unit count: </span><span class="string">&quot;</span> + <span class="ST2">unitCount</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+237         <span class="string">&quot;</span><span class="string">Sales price: </span><span class="string">&quot;</span> + <span class="literal">this</span>.getTransactionTotal() + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+238         <span class="string">&quot;</span><span class="string">Tax rate: </span><span class="string">&quot;</span> + <span class="ST2">taxRate</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+239         <span class="string">&quot;</span><span class="string">Discount rate: </span><span class="string">&quot;</span> + <span class="ST2">discountRate</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+240         <span class="string">&quot;</span><span class="string">Transaction date: </span><span class="string">&quot;</span> + <span class="ST2">txnDate</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+241         <span class="string">&quot;</span><span class="string">City: </span><span class="string">&quot;</span> + <span class="ST2">city</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+242         <span class="string">&quot;</span><span class="string">State: </span><span class="string">&quot;</span> + <span class="ST2">state</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+243         <span class="string">&quot;</span><span class="string">Code: </span><span class="string">&quot;</span> + <span class="ST2">code</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span>
+244     );
+245   } 
+246 
+247     <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">printSummary</span>(){
+248     System.<span class="ST3">out</span>.println(
+249         <span class="string">&quot;</span><span class="string">ID: </span><span class="string">&quot;</span> + <span class="ST2">txnId</span> + <span class="string">&quot;</span><span class="string"> -- </span><span class="string">&quot;</span> +
+250         <span class="string">&quot;</span><span class="string">Seller: </span><span class="string">&quot;</span> + <span class="ST2">salesPerson</span> + <span class="string">&quot;</span><span class="string"> -- </span><span class="string">&quot;</span> +
+251         <span class="string">&quot;</span><span class="string">Buyer: </span><span class="string">&quot;</span> + <span class="ST2">buyerName</span> + <span class="string">&quot;</span><span class="string"> -- </span><span class="string">&quot;</span> +
+252         <span class="string">&quot;</span><span class="string">Product: </span><span class="string">&quot;</span> + <span class="ST2">product</span> + <span class="string">&quot;</span><span class="string"> -- </span><span class="string">&quot;</span> + 
+253         <span class="string">&quot;</span><span class="string">ST: </span><span class="string">&quot;</span> + <span class="ST2">state</span> + <span class="string">&quot;</span><span class="string"> -- </span><span class="string">&quot;</span> + 
+254         <span class="string">&quot;</span><span class="string">Amt: </span><span class="string">&quot;</span> + <span class="literal">this</span>.getTransactionTotal() + <span class="string">&quot;</span><span class="string"> -- </span><span class="string">&quot;</span> +
+255         <span class="string">&quot;</span><span class="string">Date: </span><span class="string">&quot;</span> + <span class="ST2">txnDate</span>);
+256     }
+257     
+258 
+259   @Override
+260   <span class="literal">public</span> String <span class="ST1">toString</span>(){
+261     <span class="literal">return</span> <span class="string">&quot;</span><span class="string">Transaction id: </span><span class="string">&quot;</span> + <span class="ST2">txnId</span> +
+262         <span class="string">&quot;</span><span class="string">Sales person: </span><span class="string">&quot;</span> + <span class="ST2">salesPerson</span> +
+263         <span class="string">&quot;</span><span class="string">Buyer name: </span><span class="string">&quot;</span> + <span class="ST2">buyerName</span> + 
+264         <span class="string">&quot;</span><span class="string">Buyer class: </span><span class="string">&quot;</span> + <span class="ST2">buyerClass</span> +
+265         <span class="string">&quot;</span><span class="string">Product: </span><span class="string">&quot;</span> + <span class="ST2">product</span> + 
+266         <span class="string">&quot;</span><span class="string">Payment type: </span><span class="string">&quot;</span> + <span class="ST2">paymentType</span> +
+267         <span class="string">&quot;</span><span class="string">Unit price: $</span><span class="string">&quot;</span> + <span class="ST2">unitPrice</span> +
+268         <span class="string">&quot;</span><span class="string">Unit count: </span><span class="string">&quot;</span> + <span class="ST2">unitCount</span> +
+269         <span class="string">&quot;</span><span class="string">Sales price: </span><span class="string">&quot;</span> + <span class="literal">this</span>.getTransactionTotal() + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span> +
+270         <span class="string">&quot;</span><span class="string">Tax rate: </span><span class="string">&quot;</span> + <span class="ST2">taxRate</span> +
+271         <span class="string">&quot;</span><span class="string">Discount rate: </span><span class="string">&quot;</span> + <span class="ST2">discountRate</span> +
+272         <span class="string">&quot;</span><span class="string">Transaction date: </span><span class="string">&quot;</span> + <span class="ST2">txnDate</span> +
+273         <span class="string">&quot;</span><span class="string">City: </span><span class="string">&quot;</span> + <span class="ST2">city</span> + 
+274         <span class="string">&quot;</span><span class="string">State: </span><span class="string">&quot;</span> + <span class="ST2">state</span> +
+275         <span class="string">&quot;</span><span class="string">Code: </span><span class="string">&quot;</span> + <span class="ST2">code</span> + <span class="string">&quot;</span><span class="ST6">\n</span><span class="string">&quot;</span>;
+276   } 
+277 
+278   <span class="literal">public</span> <span class="literal">static</span> List&lt;SalesTxn&gt; <span class="ST4">createTxnList</span>(){
+279     List&lt;SalesTxn&gt; txnList = <span class="literal">new</span> ArrayList&lt;&gt;();
+280     
+281     txnList.add(
+282       <span class="literal">new</span> SalesTxn.Builder()
+283             .txnId(11)
+284             .salesPerson(<span class="string">&quot;</span><span class="string">Jane Doe</span><span class="string">&quot;</span>)
+285             .buyerName(<span class="string">&quot;</span><span class="string">Acme Electronics</span><span class="string">&quot;</span>)
+286             .buyerClass(<span class="string">&quot;</span><span class="string">Silver</span><span class="string">&quot;</span>)
+287             .product(<span class="string">&quot;</span><span class="string">Widgets</span><span class="string">&quot;</span>)
+288             .paymentType(<span class="string">&quot;</span><span class="string">Cash</span><span class="string">&quot;</span>)
+289             .unitPrice(20)
+290             .unitCount(3000)
+291             .taxRate(0.09)
+292             .discountRate(0.02)
+293             .txnDate(LocalDate.<span class="ST5">of</span>(2013,1,25))
+294             .city(<span class="string">&quot;</span><span class="string">San Jose</span><span class="string">&quot;</span>)
+295             .state(<span class="string">&quot;</span><span class="string">CA</span><span class="string">&quot;</span>)
+296             .code(<span class="string">&quot;</span><span class="string">95101</span><span class="string">&quot;</span>)
+297             .build() 
+298     );
+299     
+300     
+301     txnList.add(
+302       <span class="literal">new</span> SalesTxn.Builder()
+303             .txnId(12)
+304             .salesPerson(<span class="string">&quot;</span><span class="string">Jane Doe</span><span class="string">&quot;</span>)
+305             .buyerName(<span class="string">&quot;</span><span class="string">Acme Electronics</span><span class="string">&quot;</span>)
+306             .buyerClass(<span class="string">&quot;</span><span class="string">Silver</span><span class="string">&quot;</span>)
+307             .product(<span class="string">&quot;</span><span class="string">Widget Pro</span><span class="string">&quot;</span>)
+308             .paymentType(<span class="string">&quot;</span><span class="string">Cash</span><span class="string">&quot;</span>)
+309             .unitPrice(40)
+310             .unitCount(10000)
+311             .taxRate(0.09)
+312             .discountRate(0.02)
+313             .txnDate(LocalDate.<span class="ST5">of</span>(2013,4,5))
+314             .city(<span class="string">&quot;</span><span class="string">San Jose</span><span class="string">&quot;</span>)
+315             .state(<span class="string">&quot;</span><span class="string">CA</span><span class="string">&quot;</span>)
+316             .code(<span class="string">&quot;</span><span class="string">95101</span><span class="string">&quot;</span>)
+317             .build() 
+318     );
+319     
+320     
+321     txnList.add(
+322       <span class="literal">new</span> SalesTxn.Builder()
+323             .txnId(13)
+324             .salesPerson(<span class="string">&quot;</span><span class="string">Jane Doe</span><span class="string">&quot;</span>)
+325             .buyerName(<span class="string">&quot;</span><span class="string">Radio Hut</span><span class="string">&quot;</span>)
+326             .buyerClass(<span class="string">&quot;</span><span class="string">Platinum</span><span class="string">&quot;</span>)
+327             .product(<span class="string">&quot;</span><span class="string">Widget Pro</span><span class="string">&quot;</span>)
+328             .paymentType(<span class="string">&quot;</span><span class="string">Credit</span><span class="string">&quot;</span>)
+329             .unitPrice(40)
+330             .unitCount(50000)
+331             .taxRate(0.09)
+332             .discountRate(0.03)
+333             .txnDate(LocalDate.<span class="ST5">of</span>(2013,10,3))
+334             .city(<span class="string">&quot;</span><span class="string">San Jose</span><span class="string">&quot;</span>)
+335             .state(<span class="string">&quot;</span><span class="string">CA</span><span class="string">&quot;</span>)
+336             .code(<span class="string">&quot;</span><span class="string">95101</span><span class="string">&quot;</span>)
+337             .build() 
+338     );
+339     
+340     txnList.add(
+341       <span class="literal">new</span> SalesTxn.Builder()
+342             .txnId(14)
+343             .salesPerson(<span class="string">&quot;</span><span class="string">John Smith</span><span class="string">&quot;</span>)
+344             .buyerName(<span class="string">&quot;</span><span class="string">Great Deals</span><span class="string">&quot;</span>)
+345             .buyerClass(<span class="string">&quot;</span><span class="string">Normal</span><span class="string">&quot;</span>)
+346             .product(<span class="string">&quot;</span><span class="string">Widget</span><span class="string">&quot;</span>)
+347             .paymentType(<span class="string">&quot;</span><span class="string">Credit</span><span class="string">&quot;</span>)
+348             .unitPrice(20)
+349             .unitCount(5000)
+350             .taxRate(0.09)
+351             .discountRate(0)
+352             .txnDate(LocalDate.<span class="ST5">of</span>(2013,10,10))
+353             .city(<span class="string">&quot;</span><span class="string">San Jose</span><span class="string">&quot;</span>)
+354             .state(<span class="string">&quot;</span><span class="string">CA</span><span class="string">&quot;</span>)
+355             .code(<span class="string">&quot;</span><span class="string">95101</span><span class="string">&quot;</span>)
+356             .build() 
+357     );
+358     txnList.add(
+359       <span class="literal">new</span> SalesTxn.Builder()
+360             .txnId(15)
+361             .salesPerson(<span class="string">&quot;</span><span class="string">Betty Jones</span><span class="string">&quot;</span>)
+362             .buyerName(<span class="string">&quot;</span><span class="string">Radio Hut</span><span class="string">&quot;</span>)
+363             .buyerClass(<span class="string">&quot;</span><span class="string">Platinum</span><span class="string">&quot;</span>)
+364             .product(<span class="string">&quot;</span><span class="string">Widget Pro</span><span class="string">&quot;</span>)
+365             .paymentType(<span class="string">&quot;</span><span class="string">Cash</span><span class="string">&quot;</span>)
+366             .unitPrice(40)
+367             .unitCount(20000)
+368             .taxRate(0.08)
+369             .discountRate(0.04)
+370             .txnDate(LocalDate.<span class="ST5">of</span>(2013,2,4))
+371             .city(<span class="string">&quot;</span><span class="string">Denver</span><span class="string">&quot;</span>)
+372             .state(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>)
+373             .code(<span class="string">&quot;</span><span class="string">80216</span><span class="string">&quot;</span>)
+374             .build() 
+375     );
+376     
+377     txnList.add(
+378       <span class="literal">new</span> SalesTxn.Builder()
+379             .txnId(16)
+380             .salesPerson(<span class="string">&quot;</span><span class="string">Betty Jones</span><span class="string">&quot;</span>)
+381             .buyerName(<span class="string">&quot;</span><span class="string">Best Deals</span><span class="string">&quot;</span>)
+382             .buyerClass(<span class="string">&quot;</span><span class="string">Gold</span><span class="string">&quot;</span>)
+383             .product(<span class="string">&quot;</span><span class="string">Widget</span><span class="string">&quot;</span>)
+384             .paymentType(<span class="string">&quot;</span><span class="string">Cash</span><span class="string">&quot;</span>)
+385             .unitPrice(20)
+386             .unitCount(25000)
+387             .taxRate(0.08)
+388             .discountRate(0.03)
+389             .txnDate(LocalDate.<span class="ST5">of</span>(2013,3,21))
+390             .city(<span class="string">&quot;</span><span class="string">Denver</span><span class="string">&quot;</span>)
+391             .state(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>)
+392             .code(<span class="string">&quot;</span><span class="string">80216</span><span class="string">&quot;</span>)
+393             .build() 
+394     );
+395     
+396     txnList.add(
+397       <span class="literal">new</span> SalesTxn.Builder()
+398             .txnId(17)
+399             .salesPerson(<span class="string">&quot;</span><span class="string">Dave Smith</span><span class="string">&quot;</span>)
+400             .buyerName(<span class="string">&quot;</span><span class="string">PriceCo</span><span class="string">&quot;</span>)
+401             .buyerClass(<span class="string">&quot;</span><span class="string">Silver</span><span class="string">&quot;</span>)
+402             .product(<span class="string">&quot;</span><span class="string">Widget Pro</span><span class="string">&quot;</span>)
+403             .paymentType(<span class="string">&quot;</span><span class="string">Credit</span><span class="string">&quot;</span>)
+404             .unitPrice(40)
+405             .unitCount(6000)
+406             .taxRate(0.08)
+407             .discountRate(0.01)
+408             .txnDate(LocalDate.<span class="ST5">of</span>(2013,3,20))
+409             .city(<span class="string">&quot;</span><span class="string">Denver</span><span class="string">&quot;</span>)
+410             .state(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>)
+411             .code(<span class="string">&quot;</span><span class="string">80216</span><span class="string">&quot;</span>)
+412             .build() 
+413     );
+414     
+415     
+416     txnList.add(
+417       <span class="literal">new</span> SalesTxn.Builder()
+418             .txnId(18)
+419             .salesPerson(<span class="string">&quot;</span><span class="string">Dave Smith</span><span class="string">&quot;</span>)
+420             .buyerName(<span class="string">&quot;</span><span class="string">PriceCo</span><span class="string">&quot;</span>)
+421             .buyerClass(<span class="string">&quot;</span><span class="string">Silver</span><span class="string">&quot;</span>)
+422             .product(<span class="string">&quot;</span><span class="string">Widget</span><span class="string">&quot;</span>)
+423             .paymentType(<span class="string">&quot;</span><span class="string">Cash</span><span class="string">&quot;</span>)
+424             .unitPrice(20)
+425             .unitCount(15000)
+426             .taxRate(0.08)
+427             .discountRate(0.02)
+428             .txnDate(LocalDate.<span class="ST5">of</span>(2013,3,30))
+429             .city(<span class="string">&quot;</span><span class="string">Denver</span><span class="string">&quot;</span>)
+430             .state(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>)
+431             .code(<span class="string">&quot;</span><span class="string">80216</span><span class="string">&quot;</span>)
+432             .build() 
+433     );
+434     txnList.add(
+435       <span class="literal">new</span> SalesTxn.Builder()
+436             .txnId(19)
+437             .salesPerson(<span class="string">&quot;</span><span class="string">Betty Jones</span><span class="string">&quot;</span>)
+438             .buyerName(<span class="string">&quot;</span><span class="string">Best Deals</span><span class="string">&quot;</span>)
+439             .buyerClass(<span class="string">&quot;</span><span class="string">Gold</span><span class="string">&quot;</span>)
+440             .product(<span class="string">&quot;</span><span class="string">Widget Pro</span><span class="string">&quot;</span>)
+441             .paymentType(<span class="string">&quot;</span><span class="string">Credit</span><span class="string">&quot;</span>)
+442             .unitPrice(40)
+443             .unitCount(20000)
+444             .taxRate(0.08)
+445             .discountRate(0.02)
+446             .txnDate(LocalDate.<span class="ST5">of</span>(2013,7,12))
+447             .city(<span class="string">&quot;</span><span class="string">Denver</span><span class="string">&quot;</span>)
+448             .state(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>)
+449             .code(<span class="string">&quot;</span><span class="string">80216</span><span class="string">&quot;</span>)
+450             .build() 
+451     );
+452     
+453     txnList.add(
+454       <span class="literal">new</span> SalesTxn.Builder()
+455             .txnId(20)
+456             .salesPerson(<span class="string">&quot;</span><span class="string">John Adams</span><span class="string">&quot;</span>)
+457             .buyerName(<span class="string">&quot;</span><span class="string">PriceCo</span><span class="string">&quot;</span>)
+458             .buyerClass(<span class="string">&quot;</span><span class="string">Silver</span><span class="string">&quot;</span>)
+459             .product(<span class="string">&quot;</span><span class="string">Widget</span><span class="string">&quot;</span>)
+460             .paymentType(<span class="string">&quot;</span><span class="string">Cash</span><span class="string">&quot;</span>)
+461             .unitPrice(20)
+462             .unitCount(14000)
+463             .taxRate(0.09)
+464             .discountRate(0.02)
+465             .txnDate(LocalDate.<span class="ST5">of</span>(2013,7,14))
+466             .city(<span class="string">&quot;</span><span class="string">Boston</span><span class="string">&quot;</span>)
+467             .state(<span class="string">&quot;</span><span class="string">MA</span><span class="string">&quot;</span>)
+468             .code(<span class="string">&quot;</span><span class="string">02108</span><span class="string">&quot;</span>)
+469             .build() 
+470     );
+471     
+472     txnList.add(
+473       <span class="literal">new</span> SalesTxn.Builder()
+474             .txnId(21)
+475             .salesPerson(<span class="string">&quot;</span><span class="string">John Adams</span><span class="string">&quot;</span>)
+476             .buyerName(<span class="string">&quot;</span><span class="string">PriceCo</span><span class="string">&quot;</span>)
+477             .buyerClass(<span class="string">&quot;</span><span class="string">Silver</span><span class="string">&quot;</span>)
+478             .product(<span class="string">&quot;</span><span class="string">Widget Pro</span><span class="string">&quot;</span>)
+479             .paymentType(<span class="string">&quot;</span><span class="string">Cash</span><span class="string">&quot;</span>)
+480             .unitPrice(40)
+481             .unitCount(16000)
+482             .taxRate(0.09)
+483             .discountRate(0.02)
+484             .txnDate(LocalDate.<span class="ST5">of</span>(2013,10,6))
+485             .city(<span class="string">&quot;</span><span class="string">Boston</span><span class="string">&quot;</span>)
+486             .state(<span class="string">&quot;</span><span class="string">MA</span><span class="string">&quot;</span>)
+487             .code(<span class="string">&quot;</span><span class="string">02108</span><span class="string">&quot;</span>)
+488             .build() 
+489     );
+490     
+491     txnList.add(
+492       <span class="literal">new</span> SalesTxn.Builder()
+493             .txnId(22)
+494             .salesPerson(<span class="string">&quot;</span><span class="string">Samuel Adams</span><span class="string">&quot;</span>)
+495             .buyerName(<span class="string">&quot;</span><span class="string">Mom and Pops</span><span class="string">&quot;</span>)
+496             .buyerClass(<span class="string">&quot;</span><span class="string">Normal</span><span class="string">&quot;</span>)
+497             .product(<span class="string">&quot;</span><span class="string">Widget</span><span class="string">&quot;</span>)
+498             .paymentType(<span class="string">&quot;</span><span class="string">Cash</span><span class="string">&quot;</span>)
+499             .unitPrice(20)
+500             .unitCount(3000)
+501             .taxRate(0.09)
+502             .discountRate(0.01)
+503             .txnDate(LocalDate.<span class="ST5">of</span>(2013,10,2))
+504             .city(<span class="string">&quot;</span><span class="string">Boston</span><span class="string">&quot;</span>)
+505             .state(<span class="string">&quot;</span><span class="string">MA</span><span class="string">&quot;</span>)
+506             .code(<span class="string">&quot;</span><span class="string">02108</span><span class="string">&quot;</span>)
+507             .build() 
+508     );
+509     
+510     txnList.add(
+511       <span class="literal">new</span> SalesTxn.Builder()
+512             .txnId(23)
+513             .salesPerson(<span class="string">&quot;</span><span class="string">Samuel Adams</span><span class="string">&quot;</span>)
+514             .buyerName(<span class="string">&quot;</span><span class="string">Radio Hut</span><span class="string">&quot;</span>)
+515             .buyerClass(<span class="string">&quot;</span><span class="string">Platinum</span><span class="string">&quot;</span>)
+516             .product(<span class="string">&quot;</span><span class="string">Widget Pro</span><span class="string">&quot;</span>)
+517             .paymentType(<span class="string">&quot;</span><span class="string">Cash</span><span class="string">&quot;</span>)
+518             .unitPrice(40)
+519             .unitCount(26000)
+520             .taxRate(0.09)
+521             .discountRate(0.04)
+522             .txnDate(LocalDate.<span class="ST5">of</span>(2013,12,8))
+523             .city(<span class="string">&quot;</span><span class="string">Boston</span><span class="string">&quot;</span>)
+524             .state(<span class="string">&quot;</span><span class="string">MA</span><span class="string">&quot;</span>)
+525             .code(<span class="string">&quot;</span><span class="string">02108</span><span class="string">&quot;</span>)
+526             .build() 
+527     );
+528     
+529     
+530     <span class="literal">return</span> txnList;
+531   }
+532   
+533 }
+534 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>A10SortComparator.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST2 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST3 {font-family: Monospaced; font-style: italic}
+.ST4 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST1 {font-family: Monospaced; font-weight: bold}
+.literal {color: #0000e6}
+.ST0 {color: #35a83b; font-family: Monospaced; font-weight: bold}
+.ST5 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.comment {color: #35a83b}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/06CollectionOperations/examples/EmployeeSearch06/src/com/example/lambda/A10SortComparator.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example.lambda;
+ 2 
+ 3 <span class="literal">import</span> java.util.Comparator;
+ 4 <span class="literal">import</span> java.util.List;
+ 5 <span class="literal">import</span> java.util.OptionalDouble;
+ 6 
+ 7 <span class="comment">/**</span>
+ 8 <span class="comment"> *</span>
+ 9 <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">oracle</span>
+10  <span class="comment">*/</span>
+11 <span class="literal">public</span> <span class="literal">class</span> <span class="ST1">A10SortComparator</span> {
+12   <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> <span class="ST2">main</span>(String[] args) {
+13     List&lt;Employee&gt; eList = Employee.<span class="ST3">createShortList</span>();
+14     
+15     System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="ST5">\n</span><span class="string">== CO Bonus Details Comparator ==</span><span class="string">&quot;</span>);
+16         
+17     eList.stream()
+18       .filter(e -&gt; e.getRole().equals(Role.<span class="ST4">EXECUTIVE</span>))
+19       .filter(e -&gt; e.getState().equals(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>))
+20       .sorted(Comparator.<span class="ST3">comparing</span>(Employee::getSurName))
+21       .forEach(Employee::printSummary);        
+22 
+23     System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="ST5">\n</span><span class="string">== CO Bonus Details Reversed ==</span><span class="string">&quot;</span>);
+24         
+25     eList.stream()
+26       .filter(e -&gt; e.getRole().equals(Role.<span class="ST4">EXECUTIVE</span>))
+27       .filter(e -&gt; e.getState().equals(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>))
+28       .sorted(Comparator.<span class="ST3">comparing</span>(Employee::getSurName).reversed())
+29       .forEach(Employee::printSummary);        
+30         
+31     System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="ST5">\n</span><span class="string">== Two Level Sort, Dept then Surname ==</span><span class="string">&quot;</span>);
+32         
+33     eList.stream()
+34       .sorted(
+35         Comparator.<span class="ST3">comparing</span>(Employee::getDept)
+36           .thenComparing(Employee::getSurName))
+37       .forEach(Employee::printSummary);            
+38     }  
+39 }
+40 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

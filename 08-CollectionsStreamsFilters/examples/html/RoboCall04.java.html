@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>RoboCall04.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST2 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST1 {font-family: Monospaced; font-weight: bold}
+.literal {color: #0000e6}
+.ST0 {color: #35a83b; font-family: Monospaced; font-weight: bold}
+.comment {color: #35a83b}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/03WhyLambda/examples/RoboCallExample/src/com/example/lambda/RoboCall04.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example.lambda;
+ 2 
+ 3 <span class="literal">import</span> java.util.List;
+ 4 <span class="literal">import</span> java.util.function.Predicate;
+ 5 
+ 6 <span class="comment">/**</span>
+ 7 <span class="comment"> *</span>
+ 8 <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">MikeW</span>
+ 9  <span class="comment">*/</span>
+10 <span class="literal">public</span> <span class="literal">class</span> <span class="ST1">RoboCall04</span> {
+11 
+12   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">phoneContacts</span>(
+13     List&lt;Person&gt; pl, Predicate&lt;Person&gt; aTest){
+14     
+15     <span class="literal">for</span>(Person p:pl){
+16       <span class="literal">if</span> (aTest.test(p)){
+17         roboCall(p);
+18       }
+19     }
+20   }
+21 
+22   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">emailContacts</span>(
+23     List&lt;Person&gt; pl, Predicate&lt;Person&gt; aTest){
+24     
+25     <span class="literal">for</span>(Person p:pl){
+26       <span class="literal">if</span> (aTest.test(p)){
+27         roboEmail(p);
+28       }
+29     }
+30   }
+31 
+32   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">mailContacts</span>(
+33     List&lt;Person&gt; pl, Predicate&lt;Person&gt; aTest){
+34     
+35     <span class="literal">for</span>(Person p:pl){
+36       <span class="literal">if</span> (aTest.test(p)){
+37         roboMail(p);
+38       }
+39     }
+40   }  
+41   
+42   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">roboCall</span>(Person p){
+43     System.<span class="ST2">out</span>.println(<span class="string">&quot;</span><span class="string">Calling </span><span class="string">&quot;</span> + p.getGivenName() 
+44       + <span class="string">&quot;</span> <span class="string">&quot;</span> + p.getSurName() + <span class="string">&quot;</span><span class="string"> age </span><span class="string">&quot;</span> + p.getAge() 
+45       + <span class="string">&quot;</span><span class="string"> at </span><span class="string">&quot;</span> + p.getPhone());
+46   }
+47   
+48   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">roboEmail</span>(Person p){
+49     System.<span class="ST2">out</span>.println(<span class="string">&quot;</span><span class="string">EMailing </span><span class="string">&quot;</span> + p.getGivenName() 
+50       + <span class="string">&quot;</span> <span class="string">&quot;</span> + p.getSurName() + <span class="string">&quot;</span><span class="string"> age </span><span class="string">&quot;</span> + p.getAge() 
+51       + <span class="string">&quot;</span><span class="string"> at </span><span class="string">&quot;</span> + p.getEmail());
+52   }
+53   
+54   <span class="literal">public</span> <span class="literal">void</span> <span class="ST1">roboMail</span>(Person p){
+55     System.<span class="ST2">out</span>.println(<span class="string">&quot;</span><span class="string">Mailing </span><span class="string">&quot;</span> + p.getGivenName() 
+56       + <span class="string">&quot;</span> <span class="string">&quot;</span> + p.getSurName() + <span class="string">&quot;</span><span class="string"> age </span><span class="string">&quot;</span> + p.getAge() 
+57       + <span class="string">&quot;</span><span class="string"> at </span><span class="string">&quot;</span> + p.getAddress() + <span class="string">&quot;</span><span class="string">, </span><span class="string">&quot;</span> + p.getCity() 
+58       + <span class="string">&quot;</span><span class="string">, </span><span class="string">&quot;</span> + p.getState() + <span class="string">&quot;</span> <span class="string">&quot;</span> + p.getCode());
+59   }
+60   
+61 }
+62 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

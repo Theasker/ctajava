@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>CyclicBarrierExample.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST2 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST3 {font-family: Monospaced; font-style: italic}
+.ST4 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST0 {font-family: Monospaced; font-weight: bold}
+.ST1 {color: #009900}
+.literal {color: #0000e6}
+.comment {color: #35a83b}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/14-Concurrency/examples/CyclicBarrierExample/src/com/example/CyclicBarrierExample.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example;
+ 2 
+ 3 <span class="literal">import</span> java.util.concurrent.BrokenBarrierException;
+ 4 <span class="literal">import</span> java.util.concurrent.CyclicBarrier;
+ 5 <span class="literal">import</span> java.util.concurrent.ExecutorService;
+ 6 <span class="literal">import</span> java.util.concurrent.Executors;
+ 7 <span class="literal">import</span> java.util.concurrent.atomic.AtomicInteger;
+ 8 
+ 9 <span class="literal">public</span> <span class="literal">class</span> <span class="ST0">CyclicBarrierExample</span> <span class="literal">implements</span> Runnable{
+10     <span class="literal">final</span> CyclicBarrier <span class="ST1">barrier</span> = <span class="literal">new</span> CyclicBarrier(2);
+11     AtomicInteger <span class="ST1">threadCount</span> = <span class="literal">new</span> AtomicInteger(0);
+12 
+13   
+14     <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> <span class="ST2">main</span>(String[] args) {
+15       ExecutorService es = Executors.<span class="ST3">newFixedThreadPool</span>(4);
+16       
+17       CyclicBarrierExample ex = <span class="literal">new</span> CyclicBarrierExample();
+18       es.submit(ex);
+19       <span class="comment">//es.submit(ex);</span>
+20       
+21       es.shutdown();
+22     }
+23     
+24     <span class="literal">public</span> <span class="literal">void</span> <span class="ST0">run</span>() {
+25       <span class="literal">try</span> {
+26         System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="string">before await - </span><span class="string">&quot;</span> 
+27           + <span class="ST1">threadCount</span>.incrementAndGet());
+28         <span class="ST1">barrier</span>.await();
+29         System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="string">after await - </span><span class="string">&quot;</span> 
+30           + <span class="ST1">threadCount</span>.get());
+31       } <span class="literal">catch</span> (BrokenBarrierException|InterruptedException ex) {
+32 
+33       }
+34     }
+35 
+36 }
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

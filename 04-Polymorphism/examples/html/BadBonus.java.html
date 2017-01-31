@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>BadBonus.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {font-family: Monospaced; font-weight: bold}
+.literal {color: #0000e6}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/04-Polymorphism/examples/Overriding/src/com/example/BadBonus.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example;
+ 2 
+ 3 <span class="literal">public</span> <span class="literal">class</span> <span class="ST0">BadBonus</span> {
+ 4   <span class="literal">public</span> <span class="literal">double</span> <span class="ST0">calcBonus</span>(Employee e){
+ 5     <span class="literal">return</span> e.getSalary() * 0.01;
+ 6   }
+ 7   
+ 8   <span class="literal">public</span> <span class="literal">double</span> <span class="ST0">calcBonus</span>(Manager m){
+ 9     <span class="literal">return</span> m.getSalary() * 0.03;
+10   }
+11 
+12   <span class="literal">public</span> <span class="literal">double</span> <span class="ST0">calcBonus</span>(Engineer e){
+13     <span class="literal">return</span> e.getSalary() * 0.02;
+14   }
+15 
+16   <span class="literal">public</span> <span class="literal">double</span> <span class="ST0">calcBonus</span>(Director d){
+17     <span class="literal">return</span> d.getSalary() * 0.05;
+18   }
+19 }
+20 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

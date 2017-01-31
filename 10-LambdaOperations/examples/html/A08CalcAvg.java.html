@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>A08CalcAvg.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST2 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST3 {font-family: Monospaced; font-style: italic}
+.ST4 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST1 {font-family: Monospaced; font-weight: bold}
+.literal {color: #0000e6}
+.ST0 {color: #35a83b; font-family: Monospaced; font-weight: bold}
+.ST5 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.comment {color: #35a83b}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/06CollectionOperations/examples/EmployeeSearch06/src/com/example/lambda/A08CalcAvg.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example.lambda;
+ 2 
+ 3 <span class="literal">import</span> java.util.List;
+ 4 <span class="literal">import</span> java.util.OptionalDouble;
+ 5 
+ 6 <span class="comment">/**</span>
+ 7 <span class="comment"> *</span>
+ 8 <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">oracle</span>
+ 9  <span class="comment">*/</span>
+10 <span class="literal">public</span> <span class="literal">class</span> <span class="ST1">A08CalcAvg</span> {
+11   <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> <span class="ST2">main</span>(String[] args) {
+12     List&lt;Employee&gt; eList = Employee.<span class="ST3">createShortList</span>();
+13         
+14     System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="ST5">\n</span><span class="string">== Average CO Bonus ==</span><span class="string">&quot;</span>);
+15     OptionalDouble result;
+16         
+17     result = eList.stream()
+18       .filter(e -&gt; e.getRole().equals(Role.<span class="ST4">EXECUTIVE</span>))
+19       .filter(e -&gt; e.getState().equals(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>))
+20       .mapToDouble(e -&gt; e.getSalary() * Bonus.<span class="ST3">byRole</span>(e.getRole()))
+21       .average();
+22         
+23     <span class="literal">if</span> (result.isPresent()){
+24       System.<span class="ST4">out</span>.printf(<span class="string">&quot;</span><span class="string">Average Bonuses paid: $%,6.2f %n</span><span class="string">&quot;</span>, 
+25         result.getAsDouble());
+26     }
+27 
+28     System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="ST5">\n</span><span class="string">== Average CO Bonus Details ==</span><span class="string">&quot;</span>);
+29         
+30     result = eList.stream()
+31       .filter(e -&gt; e.getRole().equals(Role.<span class="ST4">EXECUTIVE</span>))
+32       .filter(e -&gt; e.getState().equals(<span class="string">&quot;</span><span class="string">CO</span><span class="string">&quot;</span>))
+33       .peek(e -&gt; System.<span class="ST4">out</span>.print(<span class="string">&quot;</span><span class="string">Name: </span><span class="string">&quot;</span> + e.getGivenName() 
+34           + <span class="string">&quot;</span> <span class="string">&quot;</span> + e.getSurName() + <span class="string">&quot;</span> <span class="string">&quot;</span>))
+35       .mapToDouble(e -&gt; e.getSalary() * Bonus.<span class="ST3">byRole</span>(e.getRole()))
+36       .peek(d -&gt; System.<span class="ST4">out</span>.printf(<span class="string">&quot;</span><span class="string">Bonus paid: $%,6.2f %n</span><span class="string">&quot;</span>, d))
+37       .average();
+38         
+39       <span class="literal">if</span> (result.isPresent()){
+40         System.<span class="ST4">out</span>.printf(<span class="string">&quot;</span><span class="string">Average Bonuses paid: $%,6.2f %n</span><span class="string">&quot;</span>, 
+41           result.getAsDouble());
+42       }    
+43   }   
+44 }
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

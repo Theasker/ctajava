@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>BadManager.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST0 {font-family: Monospaced; font-weight: bold}
+.ST1 {color: #009900}
+.literal {color: #0000e6}
+.comment {color: #35a83b}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/04-Polymorphism/examples/Overriding/src/com/example/BadManager.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example;
+ 2 
+ 3 <span class="literal">public</span> <span class="literal">class</span> <span class="ST0">BadManager</span> <span class="literal">extends</span> Employee {
+ 4     <span class="literal">private</span> String <span class="ST1">deptName</span>;
+ 5 
+ 6     <span class="literal">public</span> String <span class="ST0">getDeptName</span>() {
+ 7         <span class="literal">return</span> <span class="ST1">deptName</span>;
+ 8     }
+ 9 
+10     <span class="literal">public</span> <span class="literal">void</span> <span class="ST0">setDeptName</span>(String deptName) {
+11         <span class="literal">this</span>.<span class="ST1">deptName</span> = deptName;
+12     }
+13 
+14     <span class="literal">public</span> <span class="ST0">BadManager</span>(<span class="literal">int</span> empId, String name, String ssn, <span class="literal">double</span> salary, String dept) {
+15       <span class="literal">super</span>(empId, name, ssn, salary);
+16       <span class="ST1">deptName</span> = dept;
+17     }
+18 
+19 <span class="comment">/*</span>
+20 <span class="comment">    @Override</span>
+21 <span class="comment">    private String getDetails() {</span>
+22 <span class="comment">      return super.getDetails () + </span>
+23 <span class="comment">        &quot; Dept: &quot; + deptName;</span>
+24 <span class="comment">    }</span>
+25 <span class="comment">*/</span>
+26     
+27     @Override
+28     <span class="literal">public</span> String <span class="ST0">getAllDetails</span>() {
+29       <span class="literal">return</span> <span class="literal">super</span>.getDetails () + 
+30         <span class="string">&quot;</span><span class="string"> Dept: </span><span class="string">&quot;</span> + <span class="ST1">deptName</span>;
+31     }
+32 }
+33 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>SynchronizedCounterRunnable.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST2 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST0 {font-family: Monospaced; font-weight: bold}
+.ST1 {color: #009900}
+.literal {color: #0000e6}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/14-Concurrency/examples/SynchronizedExamples/src/com/example/SynchronizedCounterRunnable.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example;
+ 2 
+ 3 <span class="literal">public</span> <span class="literal">class</span> <span class="ST0">SynchronizedCounterRunnable</span> <span class="literal">implements</span> Runnable{
+ 4   <span class="literal">private</span> SynchronizedCounter <span class="ST1">count</span> = <span class="literal">new</span> SynchronizedCounter();
+ 5   <span class="literal">private</span> <span class="literal">int</span> <span class="ST1">countSize</span> = 0;
+ 6   <span class="literal">private</span> String <span class="ST1">threadName</span>;
+ 7   
+ 8   <span class="literal">public</span> <span class="ST0">SynchronizedCounterRunnable</span>(){
+ 9     <span class="literal">super</span>();
+10   }
+11   
+12   <span class="literal">public</span> <span class="ST0">SynchronizedCounterRunnable</span>(<span class="literal">int</span> countSize, String threadName){
+13     <span class="literal">this</span>.<span class="ST1">countSize</span> = countSize;
+14     <span class="literal">this</span>.<span class="ST1">threadName</span> = threadName;
+15   }
+16   
+17   @Override
+18   <span class="literal">public</span> <span class="literal">void</span> <span class="ST0">run</span>(){
+19     <span class="literal">for</span> (<span class="literal">int</span> i = 0; i &lt; <span class="ST1">countSize</span>; i++){
+20       <span class="literal">synchronized</span>(<span class="literal">this</span>){
+21         <span class="ST1">count</span>.increment();
+22         System.<span class="ST2">out</span>.println(<span class="ST1">threadName</span> 
+23              + <span class="string">&quot;</span><span class="string"> Current Count: </span><span class="string">&quot;</span> + <span class="ST1">count</span>.getValue());
+24       }
+25     }
+26   }
+27 }
+28 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

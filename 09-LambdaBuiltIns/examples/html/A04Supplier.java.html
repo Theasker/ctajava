@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>A04Supplier.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST2 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST3 {font-family: Monospaced; font-style: italic}
+.ST4 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST1 {font-family: Monospaced; font-weight: bold}
+.literal {color: #0000e6}
+.ST0 {color: #35a83b; font-family: Monospaced; font-weight: bold}
+.ST5 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.comment {color: #35a83b}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/05LambdaBuiltins/examples/SalesTxn05/src/com/example/lambda/A04Supplier.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example.lambda;
+ 2 
+ 3 <span class="literal">import</span> java.time.LocalDate;
+ 4 <span class="literal">import</span> java.util.List;
+ 5 <span class="literal">import</span> java.util.function.Supplier;
+ 6 
+ 7 <span class="comment">/**</span>
+ 8 <span class="comment"> *</span>
+ 9 <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">MikeW</span>
+10  <span class="comment">*/</span>
+11 <span class="literal">public</span> <span class="literal">class</span> <span class="ST1">A04Supplier</span> {
+12   
+13   <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> <span class="ST2">main</span>(String[] args){ 
+14 
+15     List&lt;SalesTxn&gt; tList = SalesTxn.<span class="ST3">createTxnList</span>();
+16     Supplier&lt;SalesTxn&gt; txnSupplier = 
+17         () -&gt; <span class="literal">new</span> SalesTxn.Builder()
+18             .txnId(101)
+19             .salesPerson(<span class="string">&quot;</span><span class="string">John Adams</span><span class="string">&quot;</span>)
+20             .buyer(Buyer.<span class="ST3">getBuyerMap</span>().get(<span class="string">&quot;</span><span class="string">PriceCo</span><span class="string">&quot;</span>))
+21             .product(<span class="string">&quot;</span><span class="string">Widget</span><span class="string">&quot;</span>)
+22             .paymentType(<span class="string">&quot;</span><span class="string">Cash</span><span class="string">&quot;</span>)
+23             .unitPrice(20)
+24             .unitCount(8000)
+25             .txnDate(LocalDate.<span class="ST3">of</span>(2013,11,10))
+26             .city(<span class="string">&quot;</span><span class="string">Boston</span><span class="string">&quot;</span>)
+27             .state(State.<span class="ST4">MA</span>)
+28             .code(<span class="string">&quot;</span><span class="string">02108</span><span class="string">&quot;</span>)
+29             .build();
+30     
+31     tList.add(txnSupplier.get());
+32     System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="ST5">\n</span><span class="string">== TList</span><span class="string">&quot;</span>);
+33     tList.stream().forEach(SalesTxn::printSummary);
+34   }
+35 }
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

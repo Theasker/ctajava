@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>DbConfigSingleton.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST3 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST2 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST0 {font-family: Monospaced; font-weight: bold}
+.ST1 {color: #009900}
+.literal {color: #0000e6}
+.comment {color: #35a83b}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/04-Polymorphism/examples/SingletonPattern/src/com/example/DbConfigSingleton.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example;
+ 2 
+ 3 <span class="literal">public</span> <span class="literal">final</span> <span class="literal">class</span> <span class="ST0">DbConfigSingleton</span> {
+ 4   <span class="literal">private</span> <span class="literal">final</span> String <span class="ST1">hostName</span>;
+ 5   <span class="literal">private</span> <span class="literal">final</span> String <span class="ST1">dbName</span>;
+ 6   <span class="literal">private</span> <span class="literal">final</span> String <span class="ST1">user</span>;
+ 7   <span class="literal">private</span> <span class="literal">final</span> String <span class="ST1">passwd</span>;
+ 8   <span class="literal">private</span> <span class="literal">final</span> <span class="literal">long</span> <span class="ST1">port</span>;
+ 9     
+10   <span class="literal">private</span> <span class="literal">static</span> <span class="literal">final</span> DbConfigSingleton <span class="ST2">instance</span> =
+11             <span class="literal">new</span> DbConfigSingleton();
+12     
+13   <span class="literal">private</span> <span class="ST0">DbConfigSingleton</span>(){
+14     <span class="comment">// Values loaded from file in practice</span>
+15     <span class="ST1">hostName</span> = <span class="string">&quot;</span><span class="string">dbhost.example.com</span><span class="string">&quot;</span>;
+16     <span class="ST1">dbName</span> = <span class="string">&quot;</span><span class="string">MyDB</span><span class="string">&quot;</span>;
+17     <span class="ST1">user</span> = <span class="string">&quot;</span><span class="string">dbuser</span><span class="string">&quot;</span>;
+18     <span class="ST1">passwd</span> = <span class="string">&quot;</span><span class="string">dbpass</span><span class="string">&quot;</span>;
+19     <span class="ST1">port</span> = 7080;
+20   }
+21     
+22   <span class="literal">public</span> <span class="literal">static</span> DbConfigSingleton <span class="ST3">getInstance</span>() {
+23     <span class="literal">return</span> <span class="ST2">instance</span>;
+24   }   
+25 
+26   <span class="literal">public</span> String <span class="ST0">getHostName</span>() {
+27     <span class="literal">return</span> <span class="ST1">hostName</span>;
+28   }
+29 
+30   <span class="literal">public</span> String <span class="ST0">getDbName</span>() {
+31     <span class="literal">return</span> <span class="ST1">dbName</span>;
+32   }
+33 
+34   <span class="literal">public</span> String <span class="ST0">getUser</span>() {
+35     <span class="literal">return</span> <span class="ST1">user</span>;
+36   }
+37 
+38   <span class="literal">public</span> String <span class="ST0">getPasswd</span>() {
+39     <span class="literal">return</span> <span class="ST1">passwd</span>;
+40   }
+41 
+42   <span class="literal">public</span> <span class="literal">long</span> <span class="ST0">getPort</span>() {
+43     <span class="literal">return</span> <span class="ST1">port</span>;
+44   }
+45  
+46 }
+47 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

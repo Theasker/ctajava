@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>A06StreamData.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST2 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST3 {font-family: Monospaced; font-style: italic}
+.ST4 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST1 {font-family: Monospaced; font-weight: bold}
+.literal {color: #0000e6}
+.ST0 {color: #35a83b; font-family: Monospaced; font-weight: bold}
+.ST5 {color: #ce7b00; font-family: Monospaced; font-weight: bold}
+.comment {color: #35a83b}
+.string {color: #ce7b00}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/06CollectionOperations/examples/EmployeeSearch06/src/com/example/lambda/A06StreamData.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example.lambda;
+ 2 
+ 3 <span class="literal">import</span> java.util.Comparator;
+ 4 <span class="literal">import</span> java.util.List;
+ 5 <span class="literal">import</span> java.util.Optional;
+ 6 
+ 7 <span class="comment">/**</span>
+ 8 <span class="comment"> *</span>
+ 9 <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">oracle</span>
+10  <span class="comment">*/</span>
+11 <span class="literal">public</span> <span class="literal">class</span> <span class="ST1">A06StreamData</span> {
+12 
+13   <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> <span class="ST2">main</span>(String[] args) {
+14         
+15     List&lt;Employee&gt; eList = Employee.<span class="ST3">createShortList</span>();
+16                             
+17     System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="ST5">\n</span><span class="string">== Executive Count ==</span><span class="string">&quot;</span>);
+18     <span class="literal">long</span> execCount = 
+19         eList.stream()
+20           .filter(e -&gt; e.getRole().equals(Role.<span class="ST4">EXECUTIVE</span>))
+21           .count();
+22        
+23     System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="string">Exec count: </span><span class="string">&quot;</span> + execCount);
+24         
+25     System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="ST5">\n</span><span class="string">== Highest Paid Exec ==</span><span class="string">&quot;</span>);
+26     Optional highestExec =
+27       eList.stream()
+28         .filter(e -&gt; e.getRole().equals(Role.<span class="ST4">EXECUTIVE</span>))
+29         .max(Employee::<span class="ST3">sortBySalary</span>);
+30         
+31     <span class="literal">if</span> (highestExec.isPresent()){
+32       Employee temp = (Employee) highestExec.get();
+33       System.<span class="ST4">out</span>.printf(
+34           <span class="string">&quot;</span><span class="string">Name: </span><span class="string">&quot;</span> + temp.getGivenName() + <span class="string">&quot;</span> <span class="string">&quot;</span> 
+35           + temp.getSurName() + <span class="string">&quot;</span><span class="string">   Salary: $%,6.2f %n </span><span class="string">&quot;</span>, 
+36           temp.getSalary()); 
+37     }
+38         
+39     System.<span class="ST4">out</span>.println(<span class="string">&quot;</span><span class="ST5">\n</span><span class="string">== Lowest Paid Staff ==</span><span class="string">&quot;</span>);
+40     Optional lowestStaff =
+41         eList.stream()
+42          .filter(e -&gt; e.getRole().equals(Role.<span class="ST4">STAFF</span>))
+43          .min(Comparator.<span class="ST3">comparingDouble</span>(e -&gt; e.getSalary()));
+44         
+45     <span class="literal">if</span> (lowestStaff.isPresent()){
+46       Employee temp = (Employee) lowestStaff.get();
+47       System.<span class="ST4">out</span>.printf(<span class="string">&quot;</span><span class="string">Name: </span><span class="string">&quot;</span> + temp.getGivenName() 
+48         + <span class="string">&quot;</span> <span class="string">&quot;</span> + temp.getSurName() + 
+49         <span class="string">&quot;</span><span class="string">   Salary: $%,6.2f %n </span><span class="string">&quot;</span>, temp.getSalary());  
+50     }   
+51   }
+52 }
+53 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

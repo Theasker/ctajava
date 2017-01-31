@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Bonus.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST4 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST2 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST1 {font-family: Monospaced; font-weight: bold}
+.ST3 {color: #009900}
+.literal {color: #0000e6}
+.ST0 {color: #02ac1c; font-family: Monospaced; font-weight: bold}
+.comment {color: #02ac1c}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/06CollectionOperations/examples/EmployeeSearch/src/com/example/lambda/Bonus.java</td></tr></table>
+<pre>
+ 1 
+ 2 <span class="literal">package</span> com.example.lambda;
+ 3 
+ 4 <span class="comment">/**</span>
+ 5 <span class="comment"> *</span>
+ 6 <span class="comment"> * </span><span class="ST0">@author</span> <span class="comment">oracle</span>
+ 7  <span class="comment">*/</span>
+ 8 
+ 9 <span class="literal">public</span> <span class="literal">enum</span> <span class="ST1">Bonus</span> {
+10     
+11     <span class="ST2">STAFF</span>(0.02),
+12     <span class="ST2">MANAGER</span>(0.04),
+13     <span class="ST2">EXECUTIVE</span>(0.06);
+14     
+15     <span class="literal">private</span> <span class="literal">final</span> <span class="literal">double</span> <span class="ST3">percent</span>;
+16     
+17     <span class="ST1">Bonus</span>(<span class="literal">double</span> percent){
+18         <span class="literal">this</span>.<span class="ST3">percent</span> = percent;
+19     }
+20     
+21     <span class="literal">public</span> <span class="literal">double</span> <span class="ST1">percent</span>(){
+22         <span class="literal">return</span> <span class="ST3">percent</span>;
+23     }
+24    
+25     <span class="literal">public</span> <span class="literal">static</span> <span class="literal">double</span> <span class="ST4">byRole</span>(Role r){
+26         
+27         <span class="literal">double</span> bonusPercent = 0.0d;
+28         
+29         <span class="literal">switch</span>(r){
+30             <span class="literal">case</span> <span class="ST2">EXECUTIVE</span>: bonusPercent = <span class="ST2">EXECUTIVE</span>.<span class="ST3">percent</span>; <span class="literal">break</span>;
+31             <span class="literal">case</span> <span class="ST2">MANAGER</span>: bonusPercent = <span class="ST2">MANAGER</span>.<span class="ST3">percent</span>; <span class="literal">break</span>;
+32             <span class="literal">case</span> <span class="ST2">STAFF</span>: bonusPercent = <span class="ST2">STAFF</span>.<span class="ST3">percent</span>; <span class="literal">break</span>;
+33         }
+34         
+35         <span class="literal">return</span> bonusPercent;
+36     }
+37     
+38     
+39 }
+40 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

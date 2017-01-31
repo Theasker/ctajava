@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Z02Analyzer.java</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body {color: #000000; background-color: #ffffff; font-family: Monospaced}
+pre {color: #000000; background-color: #ffffff; font-family: Monospaced}
+table {color: #000000; background-color: #e9e8e2; font-family: Monospaced}
+.ST1 {font-family: Monospaced; font-weight: bold; font-style: italic}
+.ST2 {color: #009900; font-family: Monospaced; font-style: italic}
+.ST0 {font-family: Monospaced; font-weight: bold}
+.literal {color: #0000e6}
+.string {color: #ce7b00}
+.comment {color: #35a83b}
+-->
+</style>
+<!-- Add code before closing head tag -->
+<link rel="stylesheet" href="res/code.css" type="text/css" />
+</head>
+<body>
+<table width="100%"><tr><td align="center">/home/oracle/labs/06-Interfaces/examples/AnonymousInnerClasses/src/com/example/Z02Analyzer.java</td></tr></table>
+<pre>
+ 1 <span class="literal">package</span> com.example;
+ 2 
+ 3 <span class="literal">public</span> <span class="literal">class</span> <span class="ST0">Z02Analyzer</span> {
+ 4   <span class="literal">public</span> <span class="literal">static</span> <span class="literal">void</span> <span class="ST1">main</span>(String[] args) {
+ 5     String[] strList = 
+ 6     {<span class="string">&quot;</span><span class="string">tomorrow</span><span class="string">&quot;</span>,<span class="string">&quot;</span><span class="string">toto</span><span class="string">&quot;</span>,<span class="string">&quot;</span><span class="string">to</span><span class="string">&quot;</span>,<span class="string">&quot;</span><span class="string">timbukto</span><span class="string">&quot;</span>,<span class="string">&quot;</span><span class="string">the</span><span class="string">&quot;</span>,<span class="string">&quot;</span><span class="string">hello</span><span class="string">&quot;</span>,<span class="string">&quot;</span><span class="string">heat</span><span class="string">&quot;</span>};   
+ 7     String searchStr = <span class="string">&quot;</span><span class="string">to</span><span class="string">&quot;</span>;
+ 8     System.<span class="ST2">out</span>.println(<span class="string">&quot;</span><span class="string">Searching for: </span><span class="string">&quot;</span> + searchStr);
+ 9     
+10     <span class="comment">// Call concrete class that implments StringAnalyzer</span>
+11     ContainsAnalyzer contains = <span class="literal">new</span> ContainsAnalyzer();
+12         
+13     System.<span class="ST2">out</span>.println(<span class="string">&quot;</span><span class="string">===Contains===</span><span class="string">&quot;</span>);
+14     <span class="literal">for</span>(String currentStr:strList){
+15       <span class="literal">if</span> (contains.analyze(currentStr, searchStr)){
+16         System.<span class="ST2">out</span>.println(<span class="string">&quot;</span><span class="string">Match: </span><span class="string">&quot;</span> + currentStr);
+17       }
+18     }
+19   }  
+20 }
+21 
+</pre>
+<!-- Add code before closing body tag -->
+<script src="res/jquery.js" type="text/javascript"></script>
+<script src="res/jquery.tooltip.js" type="text/javascript"></script>
+<script src="res/tooltip.js" type="text/javascript"></script>
+</body></html>

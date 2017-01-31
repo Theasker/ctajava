@@ -1,0 +1,41 @@
+                 Enter Rosencrantz and Guildenstern.
+
+  Pol. Fare you well, my lord.
+  Ham. These tedious old fools!
+  Pol. You go to seek the Lord Hamlet. There he is.
+  Ros. [to Polonius] God save you, sir!
+                                                Exit [Polonius].
+  Guil. My honour'd lord!
+  Ros. My most dear lord!
+  Ham. My excellent good friends! How dost thou, Guildenstern? Ah,
+    Rosencrantz! Good lads, how do ye both?
+  Ros. As the indifferent children of the earth.
+  Guil. Happy in that we are not over-happy.
+    On Fortune's cap we are not the very button.
+  Ham. Nor the soles of her shoe?
+  Ros. Neither, my lord.
+  Ham. Then you live about her waist, or in the middle of her
+    favours?
+  Guil. Faith, her privates we.
+  Ham. In the secret parts of Fortune? O! most true! she is a
+    strumpet. What news ?
+  Ros. None, my lord, but that the world's grown honest.
+  Ham. Then is doomsday near! But your news is not true. Let me
+    question more in particular. What have you, my good friends,
+    deserved at the hands of Fortune that she sends you to prison
+    hither?
+  Guil. Prison, my lord?
+  Ham. Denmark's a prison.
+  Ros. Then is the world one.
+  Ham. A goodly one; in which there are many confines, wards, and
+    dungeons, Denmark being one o' th' worst.
+  Ros. We think not so, my lord.
+  Ham. Why, then 'tis none to you; for there is nothing either good
+    or bad but thinking makes it so. To me it is a prison.
+  Ros. Why, then your ambition makes it one. 'Tis too narrow for your
+    mind.
+  Ham. O God, I could be bounded in a nutshell and count myself a
+    king of infinite space, were it not that I have bad dreams.
+  Guil. Which dreams indeed are ambition; for the very substance of
+    the ambitious is merely the shadow of a dream.
+  Ham. A dream itself is but a shadow.
