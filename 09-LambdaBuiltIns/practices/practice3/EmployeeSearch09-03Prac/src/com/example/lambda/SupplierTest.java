@@ -15,12 +15,28 @@ public class SupplierTest {
     List<Employee> eList = Employee.createShortList();
     Employee first = eList.get(0);
     
-    Supplier<Employee> eSupp; // Write your Supplier lambda here
+    Supplier<Employee> eSupp = () -> new Employee.Builder()
+            .givenName("Jill")
+            .surName("Doe")
+            .age(26)
+            .gender(Gender.MALE)
+            .role(Role.STAFF)
+            .dept("Sales")
+            .startDate(LocalDate.of(2012, 7, 14))
+            .salary(45000)
+            .email("jill.doe@example.com")
+            .phoneNumber("202-123-4678")
+            .address("33 3rd St")
+            .city("Smallville")
+            .state("KS")
+            .code("12333")
+            .build(); // Write your Supplier lambda here
       
     System.out.println("=== Print employee list before");
     eList.stream().forEach(Employee::printSummary);
     
     // Add new employee here
+    eList.add(eSupp.get());
     
     System.out.println("\n=== Print employee list after");
     eList.stream().forEach(Employee::printSummary);
